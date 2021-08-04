@@ -16,8 +16,7 @@ alias gca!='git commit -v -a --amend --no-edit'
 # Checkout
 alias gcb='git checkout -b'
 alias gco='git checkout'
-alias gcm='git checkout master'
-alias gcs='git checkout staging'
+alias gcm='git checkout $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
 
 # Clone
 alias gcl='git clone --recurse-submodules'
@@ -55,7 +54,7 @@ alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbi='git rebase -i'
 alias grbs='git rebase --skip'
-alias grbm='git rebase master'
+alias grbm='git rebase $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
 
 # Remove
 alias grm='git rm'
@@ -84,6 +83,7 @@ alias gsti='git status --ignored'
 # Switch
 alias gsw='git switch'
 alias gswc='git switch --create'
+alias gswm='git switch $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
 
 github() {
   gcl git@github.com:"${1}.git"
