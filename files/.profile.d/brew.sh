@@ -45,15 +45,28 @@ _brew_full_upgrade() {
     esac
   fi
 
-  # Run the main brew update command
+  _brew_upgrade
+}
+
+_brew_upgrade() {
+  # Look for --no-cleanup argument
+  _cleanup=1
+  case "$1" in
+    --no-cleanup )
+      _cleanup=0
+      ;;
+  esac
+
+  # Do the upgrade
   printf '\nRunning %s\n' "$(magenta 'brew upgrade')"
-  brew upgrade
+  command brew upgrade
 
-  # Clean up files with brew cleanup
-  printf '\nRunning %s\n' "$(magenta 'brew cleanup')"
-  brew cleanup --prune=all -s
-
-  # We done
+  # Clean up, unless the user asked not to
+  if [ $_cleanup -gt 0 ]; then
+    printf 'Running %s\n' "$(magenta 'brew cleanup')"
+    brew cleanup --prune=all
+  fi
+  unset _cleanup
   printf '%s\n' "$(green 'Success')"
 }
 
@@ -64,6 +77,9 @@ brew() {
       ;;
     full-upgrade )
       _brew_full_upgrade
+      ;;
+    upgrade )
+      _brew_upgrade "$@"
       ;;
     * )
       command brew "$@"
