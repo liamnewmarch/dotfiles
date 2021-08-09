@@ -51,15 +51,26 @@ _brew_full_upgrade() {
 _brew_upgrade() {
   # Look for --no-cleanup argument
   _cleanup=1
-  case "$1" in
-    --no-cleanup )
-      _cleanup=0
-      ;;
-  esac
+
+  for arg; do
+    shift
+    case "$arg" in
+      --no-cleanup )
+        _cleanup=0
+        ;;
+      --help )
+        _cleanup=0
+        set -- "$@" "$arg"
+        ;;
+      * )
+        set -- "$@" "$arg"
+        ;;
+    esac
+  done
 
   # Do the upgrade
   printf '\nRunning %s\n' "$(magenta 'brew upgrade')"
-  command brew upgrade
+  command brew upgrade "$@"
 
   # Clean up, unless the user asked not to
   if [ $_cleanup -gt 0 ]; then
@@ -79,6 +90,7 @@ brew() {
       _brew_full_upgrade
       ;;
     upgrade )
+      shift
       _brew_upgrade "$@"
       ;;
     * )
