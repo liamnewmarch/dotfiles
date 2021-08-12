@@ -1,28 +1,58 @@
 #!/bin/bash
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$HOME/.dotfiles"}"
+GITHUB_REPO='liamnewmarch/dotfiles'
+GITHUB_BASE_URL="https://github.com/$GITHUB_REPO"
+GITHUB_GIT_URL="$GITHUB_BASE_URL.git"
+GITHUB_TGZ_URL="$GITHUB_BASE_URL/archive/refs/heads/main.tar.gz"
 
-exit_with_error() {
-  echo "An error occurred, $1."
-  exit 1
+is_sourced() {
+  [[ "${BASH_SOURCE[0]}" != "${0}" ]]
 }
 
-if ! command -v git 2>&1 /dev/null; then
-  exit_with_error 'Git is not installed'
+command_exists() {
+  command -v "$1" > /dev/null
+}
+
+exit_or_return() {
+  if is_sourced; then
+    return 1
+  else
+    exit 1
+  fi
+}
+
+exit_with_error() {
+  printf 'An error occurred: %s.' "$1"
+  exit_or_return
+}
+
+if is_sourced; then
+  exit_with_error 'Script was sourced, please call it'
+  return 1
 fi
 
-if [ -d "$DOTFILES_DIR" ]; then
-  # Path already exists, try to update it
-  cd "$DOTFILES_DIR" || exit
-  git pull --no-rebase
+if command_exists git; then
+  # We have git...
+  if [ -d "$DOTFILES_DIR/.git" ]; then
+    # ...dotfiles was installed by git, attempt to pull
+    git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase || exit_or_return
+  else
+    # ...attempt to clone
+    git clone --depth 1 "$GITHUB_GIT_URL" "$DOTFILES_DIR" || exit_or_return
+  fi
+elif command_exists curl && command_exists tar; then
+  # We have curl and tar...
+  mkdir -p "$DOTFILES_DIR" || exit_or_return
+  cd "$DOTFILES_DIR" || exit_or_return
+  curl "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit_or_return
 else
-  # Path doesn’t exist, make a fresh clone
-  git clone --depth 1 https://github.com/liamnewmarch/dotfiles.git "$DOTFILES_DIR"
-  cd "$DOTFILES_DIR" || exit
+  exit_with_error "Couldn’t find git or curl and tar"
 fi
 
-if [ -f install.sh ] && [ -x install.sh ]; then
-  ./install.sh
+INSTALL_SCRIPT="$DOTFILES_DIR/install.sh"
+if [ -f "$INSTALL_SCRIPT" ] && [ -x "$INSTALL_SCRIPT" ]; then
+  "$INSTALL_SCRIPT"
 else
-  exit_with_error "${DOTFILES_DIR}/install.sh is not executable"
+  exit_with_error "$INSTALL_SCRIPT is not executable"
 fi
