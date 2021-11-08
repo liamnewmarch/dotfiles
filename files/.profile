@@ -14,8 +14,9 @@
 # notable exception).
 
 # Some platform variables that are used by the profile.d scripts
-export PLATFORM IS_COLOR IS_INTERACTIVE IS_MACOS IS_LINUX
+export PLATFORM PS_SHELL IS_COLOR IS_INTERACTIVE IS_MACOS IS_LINUX
 PLATFORM="$(uname -s | tr '[:upper:]' '[:lower:]')"
+PS_SHELL="$(ps -p $$ -ocomm= | tr -d '-')"
 IS_COLOR="$(tput colors > /dev/null 2>&1 && [ "$(tput colors)" -gt 2 ] && echo 1)"
 IS_MACOS="$([ "$PLATFORM" = "darwin" ] && echo 1)"
 IS_LINUX="$([ "$PLATFORM" = "linux" ] && echo 1)"

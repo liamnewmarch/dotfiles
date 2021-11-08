@@ -1,8 +1,5 @@
-[ -r "$HOME/.profile" ] && . "$HOME/.profile"
-
 # Oh my Zsh plugins
 export plugins=(
-    brew
     colored-man-pages
     docker
     docker-compose
@@ -11,12 +8,25 @@ export plugins=(
     man
     node
     npm
-    osx
     pep8
     pip
     python
     tmux
 )
+
+# Oh-my-Zsh platform setup
+if [ -n "$IS_MACOS" ]; then
+  plugins+=(brew macos)
+elif [ -n "$(command -v lsb_release)" ]; then
+  case "$(lsb_release -is)" in
+    'Debian'|'Raspbian' )
+      plugins+=(debian)
+      ;;
+    'Ubuntu' )
+      plugins+=(ubuntu)
+      ;;
+  esac
+fi
 
 # Oh-my-Zsh specific variables
 export HIST_STAMPS='yyyy-mm-dd'
@@ -25,6 +35,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME='liam'
 export ZSH_TMUX_AUTOSTART='false'
 export ZSH_TMUX_AUTOQUIT='false'
+
+[ -r "$HOME/.profile" ] && . "$HOME/.profile"
 
 [ -n "$IS_INTERACTIVE" ] && [ -r "$ZSH/oh-my-zsh.sh" ] && . "$ZSH/oh-my-zsh.sh"
 
