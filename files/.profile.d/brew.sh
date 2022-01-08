@@ -1,7 +1,13 @@
-_zsh_emulate() {
-  # Run zsh emulate without breaking other shells
-  type emulate >/dev/null 2>/dev/null && emulate "${1:-zsh}"
-}
+alias b='brew'
+alias bfix='_brew_fix'
+alias bcl='brew clean --prune=all'
+alias bi='brew install'
+alias bl='brew leaves'
+alias bls='brew list'
+alias blt='_brew_ls_tree'
+alias bo='brew outdated'
+alias bun='brew uninstall'
+alias bup='_brew_upgrade'
 
 _brew_fix() {
   # Find where Homebrew is installed, relative paths obtained from `brew doctor`
@@ -12,40 +18,21 @@ _brew_fix() {
   printf 'Claiming ownership of paths in %s (requires sudo)\n' "$(blue "$_brew_prefix")"
 
   # Make zsh behave like sh for this part
-  _zsh_emulate sh
-  _brew_paths=$(for p in $_brew_relative_paths; do echo "$_brew_prefix/$p"; done)
-  _zsh_emulate
-
-  echo "$_brew_paths" | xargs sudo chown -R "$(whoami)"
-  echo "$_brew_paths" | xargs chmod u+w
+  for _path in $_brew_relative_paths; do
+    _path="$_brew_prefix/$_path"
+    sudo chown -R "$(whoami)" "$_path"
+    chmod u+w "$_path"
+    unset _path
+  done
   unset _brew_paths _brew_prefix _brew_relative_paths
   printf '%s\n' "$(green 'Success')"
 }
 
-_brew_full_upgrade() {
-  printf 'Running %s\n' "$(magenta 'brew doctor')"
-
-  # Offer to fix folder permissions if `brew doctor` exits with non-zero status
-  if ! brew doctor; then
-    printf '\n%s non-zero exit status from %s\n' "$(yellow 'Warning:')" "$(magenta 'brew doctor')"
-    printf 'Attempt to fix homebrew paths? [Y/n/q] '
-    read -r yn
-    case $yn in
-      [Yy]*|'' )
-        printf '\n'  # For consistency with future commands
-        brew fix
-        ;;
-      [Nn]* )
-        printf 'Continuing\n'
-        ;;
-      [Qq]*|* )
-        printf '%s\n' "$(red 'Aborted')"
-        return 1
-        ;;
-    esac
-  fi
-
-  _brew_upgrade
+_brew_ls_tree() {
+  for package in $(brew leaves); do
+    brew desc "$package"
+    brew deps --tree "$package" | tail -n +2
+  done
 }
 
 _brew_upgrade() {
@@ -79,23 +66,4 @@ _brew_upgrade() {
   fi
   unset _cleanup
   printf '%s\n' "$(green 'Success')"
-}
-
-brew() {
-  case "$1" in
-    fix )
-      _brew_fix
-      ;;
-    full-upgrade )
-      _brew_full_upgrade
-      ;;
-    upgrade )
-      shift
-      _brew_upgrade "$@"
-      ;;
-    * )
-      command brew "$@"
-      ;;
-  esac
-  return $?
 }
