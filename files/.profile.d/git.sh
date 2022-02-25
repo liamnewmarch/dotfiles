@@ -1,3 +1,8 @@
+# Return early if git is not defined
+if ! command -v git >/dev/null; then
+  return
+fi
+
 # Add
 alias g='git'
 alias ga='git add'

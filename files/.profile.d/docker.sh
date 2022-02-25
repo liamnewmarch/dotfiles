@@ -1,3 +1,8 @@
+# Return early if docker is not defined
+if ! command -v docker >/dev/null; then
+  return
+fi
+
 alias db='docker build --rm'
 alias dcb='docker compose build'
 alias dcd='docker compose down'

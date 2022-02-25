@@ -1,3 +1,8 @@
+# Return early if npm is not defined
+if ! command -v npm >/dev/null; then
+  return
+fi
+
 _npm_init_private_template='{
   "private": true,
   "type": "module"

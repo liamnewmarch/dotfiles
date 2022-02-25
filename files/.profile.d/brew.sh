@@ -1,6 +1,16 @@
+# Homebrew is installed to /opt on arm64 which not in PATH
+if [ -d /opt/homebrew/bin ]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+# Return early if brew is not defined
+if ! command -v brew >/dev/null; then
+  return
+fi
+
 alias b='brew'
 alias bfix='_brew_fix'
-alias bcl='brew clean --prune=all'
+alias bcl='brew cleanup --prune=all'
 alias bi='brew install'
 alias bl='brew leaves'
 alias bls='brew list'

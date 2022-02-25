@@ -1,6 +1,7 @@
 # Oh my Zsh plugins
 export plugins=(
     colored-man-pages
+    direnv
     docker
     docker-compose
     gcloud
