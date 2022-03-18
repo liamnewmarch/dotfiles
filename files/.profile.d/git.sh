@@ -46,8 +46,9 @@ alias gt='glol --since=12pm'
 alias gy='glol --since=yesterday.12pm --until=12pm'
 
 # Merge
-alias gm='git merge'
+alias gm='git merge --no-ff'
 alias gma='git merge --abort'
+alias gmf='git merge --ff'
 
 # Push
 alias gp='git push'
