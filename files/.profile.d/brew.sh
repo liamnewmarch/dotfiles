@@ -8,6 +8,10 @@ if ! command -v brew >/dev/null; then
   return
 fi
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_INSTALL_UPGRADE=1
+
 alias b='brew'
 alias bfix='_brew_fix'
 alias bcl='brew cleanup --prune=all'
@@ -18,6 +22,11 @@ alias blt='_brew_ls_tree'
 alias bo='brew outdated'
 alias bun='brew uninstall'
 alias bup='_brew_upgrade'
+
+_zsh_emulate() {
+  # Run zsh emulate without breaking other shells
+  type emulate >/dev/null 2>/dev/null && emulate "${1:-zsh}"
+}
 
 _brew_fix() {
   # Find where Homebrew is installed, relative paths obtained from `brew doctor`
