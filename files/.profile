@@ -51,3 +51,7 @@ for file in \
 ; do
   [ -r "$HOME/.profile.d/$file.sh" ] && . "$HOME/.profile.d/$file.sh"
 done
+
+localedit() {
+  ${EDITOR:-vi} "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
+}
