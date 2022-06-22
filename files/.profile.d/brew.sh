@@ -31,13 +31,12 @@ _zsh_emulate() {
 _brew_fix() {
   # Find where Homebrew is installed, relative paths obtained from `brew doctor`
   _brew_prefix=$(brew --prefix)
-  _brew_relative_paths='bin etc sbin share share/doc'
 
   # Warn the user that we need to use sudo
   printf 'Claiming ownership of paths in %s (requires sudo)\n' "$(blue "$_brew_prefix")"
 
   # Make zsh behave like sh for this part
-  for _path in $_brew_relative_paths; do
+  for _path in bin etc sbin share share/doc; do
     _path="$_brew_prefix/$_path"
     sudo chown -R "$(whoami)" "$_path"
     chmod u+w "$_path"
