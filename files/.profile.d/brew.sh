@@ -23,11 +23,6 @@ alias bo='brew outdated'
 alias bun='brew uninstall'
 alias bup='_brew_upgrade'
 
-_zsh_emulate() {
-  # Run zsh emulate without breaking other shells
-  type emulate >/dev/null 2>/dev/null && emulate "${1:-zsh}"
-}
-
 _brew_fix() {
   # Find where Homebrew is installed, relative paths obtained from `brew doctor`
   _brew_prefix=$(brew --prefix)
