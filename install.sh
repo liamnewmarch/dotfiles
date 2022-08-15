@@ -98,8 +98,10 @@ if is_macos && confirm 'Install Homebrew packages?'; then
   echo 'Done'
 fi
 
-if confirm 'Link global gitignore?'; then
-  echo '[1/1] Linking file'
+if confirm 'Link global git files?'; then
+  echo '[1/2] Linking gitconfig'
+  ln -fs "$DOTFILES_DIR/files/.gitconfig" "$HOME"
+  echo '[2/2] Linking gitignore'
   ln -fs "$DOTFILES_DIR/files/.gitignore" "$HOME"
   echo 'Done'
 fi
