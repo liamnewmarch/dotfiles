@@ -16,7 +16,7 @@
 [pull]
   rebase = true
 [push]
-  autoSetupRemote = simple
+  autoSetupRemote = true
 [user]
   name = Liam Newmarch
   useConfigOnly = true
