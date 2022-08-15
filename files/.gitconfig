@@ -1,0 +1,22 @@
+[core]
+  excludesfile = ~/.gitignore
+  pager = less --mouse
+[diff]
+  colorMoved = zebra
+  colorMovedWS = allow-indentation-change
+[http]
+  cookiefile = ~/.gitcookies
+[init]
+  defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
+[merge]
+  conflictstyle = diff3
+  ff = false
+[pull]
+  rebase = true
+[push]
+  autoSetupRemote = simple
+[user]
+  name = Liam Newmarch
+  useConfigOnly = true
