@@ -52,6 +52,7 @@ alias gmf='git merge --ff'
 
 # Push
 alias gp='git push'
+alias gp='git push --force-with-lease'
 alias gpuo='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
 # Rebase
