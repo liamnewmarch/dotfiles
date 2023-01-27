@@ -27,8 +27,8 @@ alias gcm='git checkout $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/"
 alias gcl='git clone --recurse-submodules'
 
 # Diff
-alias gd='git diff'
-alias gda='git diff -- ":(exclude)package-lock.json"'
+alias gd='git diff -- ":(exclude)package-lock.json"'
+alias gda='git diff'
 alias gdw='git diff --word-diff'
 
 # Fetch
