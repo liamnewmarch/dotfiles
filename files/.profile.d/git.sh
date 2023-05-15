@@ -29,6 +29,7 @@ alias gcl='git clone --recurse-submodules'
 # Diff
 alias gd='git diff -- ":(exclude)package-lock.json"'
 alias gda='git diff'
+alias gds='git diff --stat'
 alias gdw='git diff --word-diff'
 
 # Fetch
@@ -71,11 +72,13 @@ alias grmc='git rm --cached'
 alias grs='git reset'
 
 # Restore
+alias grsa='gir restore --staged --worktree'
 alias grss='git restore --staged'
 alias grsw='git restore --worktree'
 
 # Show
 alias gsh='git show'
+alias gshs='git show --stat'
 
 # Stash
 alias gsta='git stash push'

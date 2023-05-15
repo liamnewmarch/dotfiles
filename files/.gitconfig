@@ -8,8 +8,6 @@
   cookiefile = ~/.gitcookies
 [init]
   defaultBranch = main
-[interactive]
-  diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
   ff = false
