@@ -72,7 +72,7 @@ alias grmc='git rm --cached'
 alias grs='git reset'
 
 # Restore
-alias grsa='gir restore --staged --worktree'
+alias grsa='git restore --staged --worktree'
 alias grss='git restore --staged'
 alias grsw='git restore --worktree'
 
