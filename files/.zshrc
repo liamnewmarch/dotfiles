@@ -37,6 +37,9 @@ export ZSH_THEME='liam'
 export ZSH_TMUX_AUTOSTART='false'
 export ZSH_TMUX_AUTOQUIT='false'
 
+# Disable automatic updates
+zstyle ':omz:update' mode disabled
+
 [ -r "$HOME/.profile" ] && . "$HOME/.profile"
 
 [ -n "$IS_INTERACTIVE" ] && [ -r "$ZSH/oh-my-zsh.sh" ] && . "$ZSH/oh-my-zsh.sh"
