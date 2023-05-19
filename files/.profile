@@ -44,9 +44,10 @@ for file in \
   tmux \
   top \
   tree \
+  update \
   vim \
   platform \
-  'local' \
+  local \
   motd \
 ; do
   [ -r "$HOME/.profile.d/$file.sh" ] && . "$HOME/.profile.d/$file.sh"
