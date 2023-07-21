@@ -1,4 +1,8 @@
+__pycache__/
 .DS_Store
 .envrc
-.mypy_cache
-.vscode
+.mypy_cache/
+.vscode/
+*.py[cod]
+*env/
+node_modules/
