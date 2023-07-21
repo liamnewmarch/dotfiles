@@ -8,8 +8,7 @@ if ! command -v brew >/dev/null; then
   return
 fi
 
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 alias b='brew'
