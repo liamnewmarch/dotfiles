@@ -38,6 +38,7 @@ for file in \
   mkcd \
   ncdu \
   npm \
+  nvm \
   prompt \
   python \
   rust \
