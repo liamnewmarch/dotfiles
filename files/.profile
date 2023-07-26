@@ -41,6 +41,7 @@ for file in \
   prompt \
   python \
   rust \
+  temp \
   tmux \
   top \
   tree \
