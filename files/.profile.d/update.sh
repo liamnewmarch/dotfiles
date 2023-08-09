@@ -14,10 +14,10 @@ update() {
   local _sudo
 
   # Update APT packages
-  if command -v apt >/dev/null; then
+  if command -v apt-get >/dev/null; then
     _sudo=$(_sudo_check "${SUDO_APT:-true}")
-    $_sudo apt update
-    $_sudo apt upgrade --autoremove --quiet --yes
+    $_sudo apt-get update
+    $_sudo apt-get upgrade --autoremove --quiet --yes
   fi
 
   # Update Homebrew packages
