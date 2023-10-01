@@ -33,4 +33,9 @@ update() {
     _sudo=$(_sudo_check "${SUDO_NPM:-false}")
     $_sudo npm -g update
   fi
+
+  # Check if the system should be restarted
+  if [ -f /var/run/reboot-required ]; then
+    echo 'Reboot required'
+  fi
 }
