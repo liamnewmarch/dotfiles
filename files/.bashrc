@@ -7,6 +7,7 @@ export DOTFILES_BASH_INIT=1
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 shopt -s checkwinsize
+shopt -s failglob
 shopt -s globstar
 shopt -s histappend
 shopt -s nocaseglob
