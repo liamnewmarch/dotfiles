@@ -15,6 +15,13 @@ shopt -s globstar
 shopt -s histappend
 shopt -s nocaseglob
 
+# History settings
+PROMPT_COMMAND='history -a'
+HISTSIZE=500000
+HISTFILESIZE=100000
+HISTCONTROL="erasedups:ignoreboth"
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+
 # Load Homebrew bash completions if available
 if [ -r /usr/local/etc/bash_completion.d ]; then
   for file in /usr/local/etc/bash_completion.d/*; do
