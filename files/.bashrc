@@ -16,9 +16,9 @@ shopt -s histappend
 shopt -s nocaseglob
 
 # History settings
-PROMPT_COMMAND='history -a'
-HISTSIZE=500000
-HISTFILESIZE=100000
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+HISTSIZE=
+HISTFILESIZE=
 HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 
