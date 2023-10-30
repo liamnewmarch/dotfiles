@@ -6,7 +6,10 @@ export DOTFILES_BASH_INIT=1
 # Disable the bash deprecation warning on macOS
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+set -o noclobber
+
 shopt -s checkwinsize
+shopt -s cmdhist
 shopt -s failglob
 shopt -s globstar
 shopt -s histappend
