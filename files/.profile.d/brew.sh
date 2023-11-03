@@ -12,15 +12,16 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 alias b='brew'
-alias bfix='_brew_fix'
+alias bar='brew autoremove'
 alias bcl='brew cleanup --prune=all'
+alias bfix='_brew_fix'
 alias bi='brew install'
 alias bl='brew leaves'
 alias bls='brew list'
-alias blt='_brew_ls_tree'
 alias bo='brew outdated'
+alias bud='brew update'
 alias bun='brew uninstall'
-alias bup='_brew_upgrade'
+alias bup='brew upgrade'
 
 _brew_fix() {
   # Find where Homebrew is installed, relative paths obtained from `brew doctor`
@@ -37,45 +38,5 @@ _brew_fix() {
     unset _path
   done
   unset _brew_paths _brew_prefix _brew_relative_paths
-  printf '%s\n' "$(green 'Success')"
-}
-
-_brew_ls_tree() {
-  for package in $(brew leaves); do
-    brew desc "$package"
-    brew deps --tree "$package" | tail -n +2
-  done
-}
-
-_brew_upgrade() {
-  # Look for --no-cleanup argument
-  _cleanup=1
-
-  for arg; do
-    shift
-    case "$arg" in
-      --no-cleanup )
-        _cleanup=0
-        ;;
-      --help )
-        _cleanup=0
-        set -- "$@" "$arg"
-        ;;
-      * )
-        set -- "$@" "$arg"
-        ;;
-    esac
-  done
-
-  # Do the upgrade
-  printf '\nRunning %s\n' "$(magenta 'brew upgrade')"
-  command brew upgrade "$@"
-
-  # Clean up, unless the user asked not to
-  if [ $_cleanup -gt 0 ]; then
-    printf 'Running %s\n' "$(magenta 'brew cleanup')"
-    brew cleanup --prune=all
-  fi
-  unset _cleanup
   printf '%s\n' "$(green 'Success')"
 }

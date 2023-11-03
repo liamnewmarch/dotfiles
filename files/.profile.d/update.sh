@@ -17,7 +17,7 @@ update() {
   if command -v git >/dev/null; then
     printf '%s\n' "$(blue 'Updating dotfiles')"
     _sudo=$(_sudo_check "${SUDO_GIT:-false}")
-    $_sudo git -C $HOME/.profile.d pull --ff-only --no-rebase
+    $_sudo git -C "$HOME/.profile.d" pull --ff-only --no-rebase
   fi
 
   # Update APT packages
