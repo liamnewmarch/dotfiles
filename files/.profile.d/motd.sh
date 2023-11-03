@@ -1,12 +1,11 @@
 motd() {
-  host='localhost'
-  [ -n "$HOST" ] && host="$HOST"
-  [ -n "$HOSTNAME" ] && host="$HOSTNAME"
-  [ -n "$HOST_NICKNAME" ] && host="$HOST_NICKNAME"
-  session='session'
-  user=${USER:-'user'}
+  local _host _shell _user
 
-  printf '%s\n' "New $(red "$session") as $(blue "$user") on $(magenta "$host")"
+  _host=${HOST_NICKNAME:-${HOSTNAME:-${HOST:-localhost}}}
+  _shell=${PS_SHELL:-$SHELL}
+  _user=${USER:-'user'}
+
+  printf '%s\n' "$(red "$_shell") as $(blue "$_user") on $(magenta "$_host")"
 
   if [ -n "$IS_INTERACTIVE" ] && [ -z "$TMUX" ]; then
     num_tmux="$(_tmux_num_sessions)"
