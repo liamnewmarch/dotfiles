@@ -15,14 +15,14 @@ update() {
 
   # Update dotfiles
   if command -v git >/dev/null; then
-    printf '%s\n' "$(blue 'Updating dotfiles')"
+    printf '%s\n' "$(color blue 'Updating dotfiles')"
     _sudo=$(_sudo_check "${SUDO_GIT:-false}")
     $_sudo git -C "$HOME/.profile.d" pull --ff-only --no-rebase
   fi
 
   # Update APT packages
   if command -v apt-get >/dev/null; then
-    printf '%s\n' "$(blue 'Updating apt packages')"
+    printf '%s\n' "$(color blue 'Updating apt packages')"
     _sudo=$(_sudo_check "${SUDO_APT:-true}")
     $_sudo apt-get update
     $_sudo apt-get upgrade --autoremove --quiet --yes
@@ -30,7 +30,7 @@ update() {
 
   # Update Homebrew packages
   if command -v brew >/dev/null; then
-    printf '%s\n' "$(blue 'Updating brew packages')"
+    printf '%s\n' "$(color blue 'Updating brew packages')"
     _sudo=$(_sudo_check "${SUDO_BREW:-false}")
     $_sudo brew update
     $_sudo brew upgrade
@@ -39,13 +39,13 @@ update() {
 
   # Update global npm packges
   if command -v npm >/dev/null; then
-    printf '%s\n' "$(blue 'Updating global npm packages')"
+    printf '%s\n' "$(color blue 'Updating global npm packages')"
     _sudo=$(_sudo_check "${SUDO_NPM:-false}")
     $_sudo npm -g update
   fi
 
   # Check if the system should be restarted
   if [ -f /var/run/reboot-required ]; then
-    printf '%s\n' "$(yellow 'Reboot required')"
+    printf '%s\n' "$(color yellow 'Reboot required')"
   fi
 }

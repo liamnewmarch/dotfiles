@@ -28,7 +28,7 @@ _brew_fix() {
   _brew_prefix=$(brew --prefix)
 
   # Warn the user that we need to use sudo
-  printf 'Claiming ownership of paths in %s (requires sudo)\n' "$(blue "$_brew_prefix")"
+  printf 'Claiming ownership of paths in %s (requires sudo)\n' "$(color blue "$_brew_prefix")"
 
   # Make zsh behave like sh for this part
   for _path in bin etc sbin share share/doc; do
@@ -38,5 +38,5 @@ _brew_fix() {
     unset _path
   done
   unset _brew_paths _brew_prefix _brew_relative_paths
-  printf '%s\n' "$(green 'Success')"
+  printf '%s\n' "$(color green 'Success')"
 }
