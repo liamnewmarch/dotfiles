@@ -3,6 +3,10 @@ if ! command -v git >/dev/null; then
   return
 fi
 
+_git_default_branch() {
+  git symbolic-ref refs/remotes/origin/HEAD | cut -d / -f 4-
+}
+
 # Add
 alias g='git'
 alias ga='git add'
@@ -10,18 +14,14 @@ alias gaa='git add --all'
 
 # Branch
 alias gb='git branch'
-alias gba='git branch -a'
+alias gba='git branch --all'
+alias gbd='_git_default_branch'
 
 # Commit
-alias gc='git commit -v'
-alias gc!='git commit -v --amend --no-edit'
-alias gca='git commit -v -a'
-alias gca!='git commit -v -a --amend --no-edit'
-
-# Checkout
-alias gcb='git checkout -b'
-alias gco='git checkout'
-alias gcm='git checkout $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
+alias gc='git commit --verbose'
+alias gc!='git commit --amend --no-edit --verbose'
+alias gca='git commit --all --verbose'
+alias gca!='git commit --all --amend --no-edit --verbose'
 
 # Clone
 alias gcl='git clone --recurse-submodules'
@@ -60,9 +60,9 @@ alias gpuo='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias grb='git rebase'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
-alias grbi='git rebase -i'
+alias grbi='git rebase --interactive'
 alias grbs='git rebase --skip'
-alias grbm='git rebase $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
+alias grbm='git rebase "$(_git_default_branch)"'
 
 # Remove
 alias grm='git rm'
@@ -93,7 +93,7 @@ alias gsti='git status --ignored'
 # Switch
 alias gsw='git switch'
 alias gswc='git switch --create'
-alias gswm='git switch $(git symbolic-ref refs/remotes/origin/HEAD | awk -F "/" "{print \$NF}")'
+alias gswm='git switch "$(_git_default_branch)"'
 
 github() {
   gcl git@github.com:"${1}.git"
