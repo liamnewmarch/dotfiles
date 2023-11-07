@@ -1,5 +1,6 @@
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+# Return early if grep is not defined
+if ! command -v grep >/dev/null; then
+  return
+fi
 
-export GREP_COLOR="$COLOR_MAGENTA"
+alias grep='grep --color=auto'
