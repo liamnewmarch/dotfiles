@@ -10,8 +10,10 @@ set colored-completion-prefix on
 "\e[C":forward-char
 "\e[D":backward-char
 
-# History expansion with space
-Space:magic-space
+$if Bash
+  # History expansion with space
+  Space:magic-space
+$endif
 
 # Enable menu completion where tab cycles through options
 TAB:menu-complete
