@@ -15,14 +15,14 @@ Rather than add local customisations to your `.~/bashrc`, you are encouraged to 
 The easiest way to get started is to run the following (you can find the [source of this script here](https://raw.githubusercontent.com/liamnewmarch/dotfiles/master/docs/index.html)).
 
 ```sh
-curl -fsSL https://liamnewmarch.github.io/dotfiles | bash
+bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
 ```
 
 __Experimental:__ You can change the default installation directory from `~/.dotfiles` to something else by setting `DOTFILES_DIR`.
 
 ```sh
 DOTFILES_DIR="$HOME/code/liamnewmarch/dotfiles"
-curl -fsSL https://liamnewmarch.github.io/dotfiles | bash
+bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
 ```
 
 ## Manual install with `git`
