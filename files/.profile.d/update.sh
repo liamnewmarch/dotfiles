@@ -1,6 +1,4 @@
 _sudo_check() {
-  local _default _sudo_disabled _sudo_exists
-
   _default=${1:-false}  # Whether to print sudo if other checks pass
   _sudo_disabled=${NO_SUDO:-false}  # Whether the NO_SUDO flag has been set
   _sudo_exists=$(command -v sudo >/dev/null)  # Whether sudo exists in PATH
@@ -8,11 +6,11 @@ _sudo_check() {
   if $_default && $_sudo_exists && ! $_sudo_disabled; then
     printf 'sudo'
   fi
+
+  unset _default _sudo_disabled _sudo_exists
 }
 
 update() {
-  local _sudo
-
   # Update dotfiles
   if command -v git >/dev/null; then
     printf '%s\n' "$(color blue 'Updating dotfiles')"
@@ -48,4 +46,6 @@ update() {
   if [ -f /var/run/reboot-required ]; then
     printf '%s\n' "$(color yellow 'Reboot required')"
   fi
+
+  unset _sudo
 }

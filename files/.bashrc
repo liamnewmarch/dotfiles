@@ -24,7 +24,8 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 
 # Load Homebrew bash completions if available
 if [ -r /usr/local/etc/bash_completion.d ]; then
-  for file in /usr/local/etc/bash_completion.d/*; do
-    . "$file"
+  for _file in /usr/local/etc/bash_completion.d/*; do
+    . "$_file"
   done
 fi
+unset _file

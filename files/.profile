@@ -1,11 +1,5 @@
-# This file contains shell agnostic customisations. It is designed
-# to be read by Zsh and Bash and Bourne shell (sh) so shell specific
-# syntax shoud be avoided!
-#
-# The customisations themselves can be found in ~/.profile.d/
-#
-# Bash customisations can be found in ~/.bashrc
-# Zsh customisations can be found in ~/.zshrc
+# This file loads the scripts found in ~/.profile.d. Scripts are written to be
+# shell-agnostic. Bash specifc customisations can be found in ~/.bashrc.
 #
 # To enable a script, add it to the list below. Scripts should be
 # added alphabetically except where necessary (e.g. the two override
@@ -29,7 +23,7 @@ case $- in
 esac
 
 # Source profile.d scripts in the order specified
-for file in \
+for _file in \
   bin \
   brew \
   color \
@@ -55,8 +49,9 @@ for file in \
   local \
   motd \
 ; do
-  [ -r "$HOME/.profile.d/$file.sh" ] && . "$HOME/.profile.d/$file.sh"
+  [ -r "$HOME/.profile.d/$_file.sh" ] && . "$HOME/.profile.d/$_file.sh"
 done
+unset _file
 
 localedit() {
   ${EDITOR:-vi} "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
