@@ -1,58 +1,33 @@
 #!/bin/bash
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$HOME/.dotfiles"}"
-GITHUB_REPO='liamnewmarch/dotfiles'
-GITHUB_BASE_URL="https://github.com/$GITHUB_REPO"
+GITHUB_BASE_URL="https://github.com/liamnewmarch/dotfiles"
 GITHUB_GIT_URL="$GITHUB_BASE_URL.git"
 GITHUB_TGZ_URL="$GITHUB_BASE_URL/archive/refs/heads/main.tar.gz"
-
-is_sourced() {
-  [[ "${BASH_SOURCE[0]}" != "${0}" ]]
-}
-
-command_exists() {
-  command -v "$1" > /dev/null
-}
-
-exit_or_return() {
-  if is_sourced; then
-    return 1
-  else
-    exit 1
-  fi
-}
-
-exit_with_error() {
-  printf 'An error occurred: %s.' "$1"
-  exit_or_return
-}
-
-if is_sourced; then
-  exit_with_error 'Script was sourced, please call it'
-  return 1
-fi
-
-if command_exists git; then
-  # We have git...
-  if [ -d "$DOTFILES_DIR/.git" ]; then
-    # ...dotfiles was installed by git, attempt to pull
-    git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase || exit_or_return
-  else
-    # ...attempt to clone
-    git clone --depth 1 "$GITHUB_GIT_URL" "$DOTFILES_DIR" || exit_or_return
-  fi
-elif command_exists curl && command_exists tar; then
-  # We have curl and tar...
-  mkdir -p "$DOTFILES_DIR" || exit_or_return
-  cd "$DOTFILES_DIR" || exit_or_return
-  curl "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit_or_return
-else
-  exit_with_error "Couldn’t find git or curl and tar"
-fi
-
 INSTALL_SCRIPT="$DOTFILES_DIR/install.sh"
+
+if command -v git >/dev/null; then
+    if [ -d "$DOTFILES_DIR/.git" ]; then
+        git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase || exit 1
+    else
+      git clone --depth 1 "$GITHUB_GIT_URL" "$DOTFILES_DIR" || exit 1
+    fi
+elif command -v curl >/dev/null && command -v tar >/dev/null; then
+  mkdir -p "$DOTFILES_DIR" || exit 1
+  cd "$DOTFILES_DIR" || exit 1
+  curl -sSL "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit 1
+elif command -v wget >/dev/null && command -v tar >/dev/null; then
+  mkdir -p "$DOTFILES_DIR" || exit 1
+  cd "$DOTFILES_DIR" || exit 1
+  wget "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit 1
+else
+  echo 'Error: no way to install'
+  exit 1
+fi
+
 if [ -f "$INSTALL_SCRIPT" ] && [ -x "$INSTALL_SCRIPT" ]; then
   "$INSTALL_SCRIPT"
 else
-  exit_with_error "$INSTALL_SCRIPT is not executable"
+  echo "Error: $INSTALL_SCRIPT is not executable"
+  exit 1
 fi
