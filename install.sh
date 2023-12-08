@@ -15,8 +15,8 @@ vim_plugins=(
 )
 
 confirm() {
-  read -r -p "${1:-Are you sure?} [y/N] " response
-  case "$response" in
+  read -r -p "${1:-'Are you sure?'} [y/N] " _response
+  case "$_response" in
     [yY][eE][sS]|[yY])
       true
       ;;
@@ -24,22 +24,23 @@ confirm() {
       false
       ;;
   esac
+  unset _response
 }
 
 github() {
-  local path
   if [ -z "$1" ]; then
     echo 'Download (clone) or update (pull) a GitHub repo to a local folder.'
     echo 'Usage: github username/repo [path]'
     exit 1
   fi
-  path="${2:-'.'}/$(echo "$1" | cut -d '/' -f2)"
-  if [ -e "$path" ]; then
-    echo "Path $path already exists, updating"
-    git -C "$path" pull
+  _path="${2:-'.'}/$(echo "$1" | cut -d '/' -f2)"
+  if [ -e "$_path" ]; then
+    echo "Path $_path already exists, updating"
+    git -C "$_path" pull
   else
-    git clone --depth 1 "https://github.com/$1.git" "$path"
+    git clone --depth 1 "https://github.com/$1.git" "$_path"
   fi
+  unset _path
 }
 
 is_macos() {
@@ -50,54 +51,19 @@ if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command lin
   xcode-select --install
 fi
 
-if confirm 'Link shell files?'; then
-  echo '[1/4] Link ~/.profile and ~/.profile.d'
+if confirm 'Link .bash_profile, .bashrc, .inputrc and .profile?'; then
+  echo '[1/3] Link ~/.profile and ~/.profile.d'
   ln -fs "$DOTFILES_DIR/files/.profile" "$HOME"
   [ ! -d "$HOME/.profile.d" ] && ln -fs "$DOTFILES_DIR/files/.profile.d" "$HOME"
-  echo '[2/4] Link ~/.inputrc'
+  echo '[2/3] Link ~/.inputrc'
   ln -fs "$DOTFILES_DIR/files/.inputrc" "$HOME"
-  echo '[3/4] Link ~/.bashrc and ~/.bash_profile'
+  echo '[3/3] Link ~/.bashrc and ~/.bash_profile'
   ln -fs "$DOTFILES_DIR/files/.bash_profile" "$HOME"
   ln -fs "$DOTFILES_DIR/files/.bashrc" "$HOME"
-  echo '[4/4] Link ~/.zshrc'
-  ln -fs "$DOTFILES_DIR/files/.zshrc" "$HOME"
   echo 'Done'
 fi
 
-if confirm 'Install Oh my Zsh?'; then
-  echo '[1/2] Install Oh my zsh'
-  if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    chsh -s "$(which zsh)"
-  else
-    echo 'Skipping, Oh my Zsh already installed.'
-  fi
-  echo '[2/2] Link custom theme'
-  ln -fs "$DOTFILES_DIR/files/.oh-my-zsh/custom/themes/liam.zsh-theme" "$HOME/.oh-my-zsh/custom/themes"
-  echo 'Done'
-fi
-
-if is_macos && confirm 'Install Homebrew?'; then
-  echo '[1/1] Installing Homebrew'
-  if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  else
-    echo 'Skipping, Homebrew is already installed.'
-  fi
-  echo 'Done'
-fi
-
-if is_macos && confirm 'Install Homebrew packages?'; then
-  echo '[1/3] Updating Homebrew'
-  brew update
-  echo '[2/3] Installing ffmpeg, git, htop, imagemagick, node, python, shellcheck, tldr, tmux, tree and wget'
-  brew install ffmpeg git htop imagemagick node python shellcheck tldr tmux tree wget
-  echo '[3/3] Installing casks google-chrome, google-cloud-sdk, imageoptim, iterm2 and visual-studio-code'
-  brew cask install google-chrome google-cloud-sdk imageoptim iterm2 visual-studio-code
-  echo 'Done'
-fi
-
-if confirm 'Link global git files?'; then
+if confirm 'Link .gitconfig and .gitignore?'; then
   echo '[1/2] Linking gitconfig'
   ln -fs "$DOTFILES_DIR/files/.gitconfig" "$HOME"
   echo '[2/2] Linking gitignore'
@@ -105,7 +71,7 @@ if confirm 'Link global git files?'; then
   echo 'Done'
 fi
 
-if confirm 'Link tmux config?'; then
+if confirm 'Link .tmux.conf and install theme?'; then
   echo '[1/2] Installing tmux-themepack'
   github jimeh/tmux-themepack "$HOME/.tmux/themes"
   echo '[2/2] Linking file'
@@ -113,7 +79,7 @@ if confirm 'Link tmux config?'; then
   echo 'Done'
 fi
 
-if confirm 'Link vimrc and install plugins?'; then
+if confirm 'Link .vimrc and install plugins?'; then
   steps=$(( ${#vim_plugins[@]} + 1 ))
   for index in "${!vim_plugins[@]}"; do
     plugin="${vim_plugins[$index]}"
@@ -122,6 +88,12 @@ if confirm 'Link vimrc and install plugins?'; then
   done
   echo "[${steps}/${steps}] Linking config file"
   ln -fs "$DOTFILES_DIR/files/.vimrc" "$HOME"
+fi
+
+if is_macos && ! command -v >/dev/null && confirm 'Install Homebrew?'; then
+  echo '[1/1] Installing Homebrew'
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'Done'
 fi
 
 if is_macos && confirm 'Set custom macOS defaults?'; then
