@@ -31,6 +31,15 @@ set visible-stats on
 
 # vi mode
 set editing-mode vi
-set show-mode-in-prompt on
-set vi-cmd-mode-string "(edit) "
-set vi-ins-mode-string ""
+
+$if mode=vi
+  set show-mode-in-prompt on
+  set vi-cmd-mode-string "(edit) "
+  set vi-ins-mode-string ""
+
+  set keymap vi-command
+  Control-l: clear-screen
+
+  set keymap vi-insert
+  Control-l: clear-screen
+$endif
