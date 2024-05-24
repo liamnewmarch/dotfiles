@@ -39,7 +39,15 @@ $if mode=vi
 
   set keymap vi-command
   Control-l: clear-screen
+  "\e[A":history-search-backward
+  "\e[B":history-search-forward
+  "\e[C":forward-char
+  "\e[D":backward-char
 
   set keymap vi-insert
   Control-l: clear-screen
+  "\e[A":history-search-backward
+  "\e[B":history-search-forward
+  "\e[C":forward-char
+  "\e[D":backward-char
 $endif
