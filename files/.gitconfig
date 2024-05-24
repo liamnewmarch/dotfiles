@@ -20,3 +20,5 @@
 [user]
   name = Liam Newmarch
   useConfigOnly = true
+[include]
+  path = ~/code/.gitconfig
