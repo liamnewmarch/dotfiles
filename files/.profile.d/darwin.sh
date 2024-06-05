@@ -1,3 +1,4 @@
+alias dictionary='${EDITOR:-open} ~/Library/Spelling/LocalDictionary'
 alias hidefile='SetFile -a V'
 alias showfile='SetFile -a v'
 
