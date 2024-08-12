@@ -13,13 +13,16 @@ _git_default_branch() {
   git symbolic-ref refs/remotes/origin/HEAD | cut -d / -f 4-
 }
 
-# Add
 alias g='git'
+
+# Add
 alias ga='git add'
 alias gaa='git add --all'
+alias gap='git add --all --patch'
 __git_complete g git
 __git_complete ga git_add
 __git_complete gaa git_add
+__git_complete gap git_add
 
 # Branch
 alias gb='git branch'
@@ -43,7 +46,7 @@ alias gcl='git clone --recurse-submodules'
 __git_complete gcl git_clone
 
 # Diff
-alias gd='git diff -- ":(exclude)package-lock.json"'
+alias gd='git diff -- ":!*lock.*" ":!*.lock*"'
 alias gda='git diff'
 alias gds='git diff --stat'
 alias gdw='git diff --word-diff'
