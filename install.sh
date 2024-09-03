@@ -18,13 +18,14 @@ confirm() {
   read -r -p "${1:-'Are you sure?'} [y/N] " _response
   case "$_response" in
     [yY][eE][sS]|[yY])
+      unset _response
       true
       ;;
     *)
+      unset _response
       false
       ;;
   esac
-  unset _response
 }
 
 github() {
