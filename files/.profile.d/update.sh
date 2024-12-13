@@ -43,8 +43,11 @@ update() {
   fi
 
   # Check if the system should be restarted
-  if [ -f /var/run/reboot-required ]; then
+  if [ -r /var/run/reboot-required ]; then
     printf '%s\n' "$(color yellow 'Reboot required')"
+    if [ -r /var/run/reboot-required.pkgs ]; then
+      cat /var/run/reboot-required.pkgs
+    fi
   fi
 
   unset _sudo
