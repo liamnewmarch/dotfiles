@@ -30,6 +30,7 @@ for _file in \
   docker \
   git \
   grep \
+  ip \
   ls \
   mkcd \
   ncdu \
