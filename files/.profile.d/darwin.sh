@@ -1,6 +1,6 @@
 alias dictionary='${EDITOR:-open} ~/Library/Spelling/LocalDictionary'
-alias hidefile='SetFile -a V'
-alias showfile='SetFile -a v'
+alias hidefile='chflags hidden'
+alias showfile='chflags nohidden'
 
 hyperlink() {
   printf "\e]8;;%s\e\\%s\e]8;;\e\\" "$@"
