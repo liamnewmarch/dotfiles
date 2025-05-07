@@ -54,6 +54,8 @@ for _file in \
 done
 unset _file
 
+alias reload='exec "$SHELL"'
+
 localedit() {
   ${EDITOR:-vi} "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
 }
