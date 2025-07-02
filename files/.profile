@@ -37,7 +37,6 @@ for _file in \
   npm \
   nvm \
   prompt \
-  pyenv \
   python \
   rust \
   temp \
