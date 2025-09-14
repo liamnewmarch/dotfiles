@@ -35,13 +35,6 @@ update() {
     $_sudo brew cleanup --prune=all
   fi
 
-  # Update global npm packges
-  if command -v npm >/dev/null; then
-    printf '%s\n' "$(color blue 'Updating global npm packages')"
-    _sudo=$(_sudo_check "${SUDO_NPM:-false}")
-    $_sudo npm -g update
-  fi
-
   # Check if the system should be restarted
   if [ -r /var/run/reboot-required ]; then
     printf '%s\n' "$(color yellow 'Reboot required')"
