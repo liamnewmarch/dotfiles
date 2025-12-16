@@ -1,0 +1,49 @@
+[window]
+dimensions = { columns = 120, lines = 42 }
+padding = { x = 13, y = 13 }
+dynamic_padding = true
+#decorations = "Buttonless" # Disabled until padding is fixed on macOS
+opacity = 0.9
+blur = true
+
+[font]
+normal = { family = "Fira Code", style = "Retina" }
+size = 13
+offset = { x = 0, y = 1 }
+
+[colors]
+primary = { foreground = "#ffffff", background = "#000000" }
+
+[colors.normal]
+black = "#29292a"
+red = "#ea436e"
+green = "#75f8dc"
+yellow = "#f4ba78"
+blue = "#7caff8"
+magenta = "#ed7db2"
+cyan = "#75f8dc"
+white = "#f2f2f2"
+
+[colors.bright]
+black = "#707681"
+red = "#ea436e"
+green = "#75f8dc"
+yellow = "#f6cb97"
+blue = "#7abaf9"
+magenta = "#f2add6"
+cyan = "#75f8dc"
+white = "#f2f2f2"
+
+[cursor]
+style = { blinking = "On" }
+
+[terminal]
+shell = "/opt/homebrew/bin/tmux"
+
+[keyboard]
+bindings = [
+  { key = "F", mods = "Control|Alt", action = "None" },
+  { key = "A", mods = "Command", chars = "\u0001" },
+  { key = "K", mods = "Command", chars = "\u000B" },
+  { key = "L", mods = "Command", chars = "\u000C" },
+]

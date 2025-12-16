@@ -91,6 +91,14 @@ if confirm 'Link .vimrc and install plugins?'; then
   ln -fs "$DOTFILES_DIR/files/.vimrc" "$HOME"
 fi
 
+if confirm "Link .config/alacritty/alacritty.toml?"; then
+  echo '[1/1] Linking config'
+  mkdir -p "$HOME/.config/alacritty"
+  ln -fs "$DOTFILES_DIR/files/.config/alacritty/alacritty.toml" "$HOME/.config/alacritty"
+fi
+unset src
+unset dest
+
 if is_macos && ! command -v >/dev/null && confirm 'Install Homebrew?'; then
   echo '[1/1] Installing Homebrew'
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
