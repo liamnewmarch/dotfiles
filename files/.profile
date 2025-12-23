@@ -28,6 +28,7 @@ for _file in \
   brew \
   color \
   docker \
+  editor \
   git \
   grep \
   ip \
@@ -44,7 +45,6 @@ for _file in \
   top \
   tree \
   update \
-  vim \
   platform \
   local \
   motd \

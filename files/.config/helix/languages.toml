@@ -1,0 +1,35 @@
+[language-server.vscode-eslint-language-server.config] 
+validate = "on" 
+experimental = { useFlatConfig = false } 
+rulesCustomizations = [] 
+run = "onType" 
+problems = { shortenToSingleLine = false } 
+nodePath = ""
+
+[[language]]
+name = "javascript"
+language-servers = [
+  "typescript-language-server", # optional
+  "vscode-eslint-language-server",
+]
+
+[[language]]
+name = "jsx"
+language-servers = [
+  "typescript-language-server",
+  "vscode-eslint-language-server",
+]
+
+[[language]]
+name = "typescript"
+language-servers = [
+  "typescript-language-server",
+  "vscode-eslint-language-server",
+]
+
+[[language]]
+name = "tsx"
+language-servers = [
+  "typescript-language-server",
+  "vscode-eslint-language-server",
+]

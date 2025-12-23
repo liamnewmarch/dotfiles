@@ -1,111 +1,134 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -e
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 
-vim_plugins=(
-  tpope/vim-sensible
-  ctrlpvim/ctrlp.vim
-  dense-analysis/ale
-  airblade/vim-gitgutter
-  junegunn/goyo.vim
-  Yggdroot/indentLine
-  tpope/vim-fugitive
-  preservim/nerdtree
-  editorconfig/editorconfig-vim
-)
+# HELPER FUNCTIONS
 
+# Prompt the user for confirmation
 confirm() {
-  read -r -p "${1:-'Are you sure?'} [y/N] " _response
-  case "$_response" in
+  local continue
+  read -r -p "$1 [y/N] " continue
+  case "$continue" in
     [yY][eE][sS]|[yY])
-      unset _response
       true
       ;;
     *)
-      unset _response
       false
       ;;
   esac
 }
 
+# Clone or pull a GitHub repo
 github() {
-  if [ -z "$1" ]; then
-    echo 'Download (clone) or update (pull) a GitHub repo to a local folder.'
-    echo 'Usage: github username/repo [path]'
-    exit 1
-  fi
-  _path="${2:-'.'}/$(echo "$1" | cut -d '/' -f2)"
-  if [ -e "$_path" ]; then
-    echo "Path $_path already exists, updating"
-    git -C "$_path" pull
+  local dest
+  dest="${2:-'.'}/$(echo "$1" | cut -d '/' -f2)"
+  if [ -e "$dest" ]; then
+    echo "A repository at path $dest already exists, updating..."
+    git -C "$dest" pull || echo 'ERROR running command "git pull"'
   else
-    git clone --depth 1 "https://github.com/$1.git" "$_path"
+    git clone --depth 1 "https://github.com/$1.git" "$dest" || echo 'ERROR running command "git clone"'
   fi
-  unset _path
 }
 
+# Test if the current system is macOS
 is_macos() {
   [ "$(uname -s)" = 'Darwin' ]
 }
 
-if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then
-  xcode-select --install
-fi
+# Create a symlink in the user's home dir
+link() {
+  ln -fs "$DOTFILES_DIR/files/$1" "$HOME/$2"
+}
 
+## INSTALLATION
+
+# Install bash
 if confirm 'Link .bash_profile, .bashrc, .inputrc and .profile?'; then
   echo '[1/3] Link ~/.profile and ~/.profile.d'
-  ln -fs "$DOTFILES_DIR/files/.profile" "$HOME"
-  [ ! -d "$HOME/.profile.d" ] && ln -fs "$DOTFILES_DIR/files/.profile.d" "$HOME"
+  link .profile
+  [ ! -d "$HOME/.profile.d" ] && link .profile.d
   echo '[2/3] Link ~/.inputrc'
-  ln -fs "$DOTFILES_DIR/files/.inputrc" "$HOME"
+  link .inputrc
   echo '[3/3] Link ~/.bashrc and ~/.bash_profile'
-  ln -fs "$DOTFILES_DIR/files/.bash_profile" "$HOME"
-  ln -fs "$DOTFILES_DIR/files/.bashrc" "$HOME"
+  link .bash_profile
+  link .bashrc
   echo 'Done'
 fi
 
+# Git
 if confirm 'Link .gitconfig and .gitignore?'; then
   echo '[1/2] Linking gitconfig'
-  ln -fs "$DOTFILES_DIR/files/.gitconfig" "$HOME"
+  link .gitconfig
   echo '[2/2] Linking gitignore'
-  ln -fs "$DOTFILES_DIR/files/.gitignore" "$HOME"
+  link .gitignore
   echo 'Done'
 fi
 
+# Tmux
 if confirm 'Link .tmux.conf and install theme?'; then
   echo '[1/2] Installing tmux-themepack'
   github jimeh/tmux-themepack "$HOME/.tmux/themes"
   echo '[2/2] Linking file'
-  ln -fs "$DOTFILES_DIR/files/.tmux.conf" "$HOME"
+  link .tmux.conf
   echo 'Done'
 fi
 
-if confirm 'Link .vimrc and install plugins?'; then
-  steps=$(( ${#vim_plugins[@]} + 1 ))
-  for index in "${!vim_plugins[@]}"; do
-    plugin="${vim_plugins[$index]}"
+# Vim
+if confirm '[Deprecated] Link .vimrc and install plugins?'; then
+  plugins=(
+    tpope/vim-sensible
+    ctrlpvim/ctrlp.vim
+    dense-analysis/ale
+    airblade/vim-gitgutter
+    junegunn/goyo.vim
+    Yggdroot/indentLine
+    tpope/vim-fugitive
+    preservim/nerdtree
+    editorconfig/editorconfig-vim
+  )
+  steps=$(( ${#plugins[@]} + 1 ))
+  for index in "${!plugins[@]}"; do
+    plugin="${plugins[$index]}"
     echo "[$(( index + 1 ))/${steps}] Install ${plugin}"
     github "$plugin" "$HOME/.vim/pack/custom/start"
   done
   echo "[${steps}/${steps}] Linking config file"
-  ln -fs "$DOTFILES_DIR/files/.vimrc" "$HOME"
+  link .vimrc
+  unset index plugin plugins steps
 fi
 
-if confirm "Link .config/alacritty/alacritty.toml?"; then
+# Alacritty
+if confirm 'Link .config/alacritty/ config?'; then
   echo '[1/1] Linking config'
   mkdir -p "$HOME/.config/alacritty"
-  ln -fs "$DOTFILES_DIR/files/.config/alacritty/alacritty.toml" "$HOME/.config/alacritty"
+  link .config/alacritty/alacritty.toml .config/alacritty
 fi
-unset src
-unset dest
 
-if is_macos && ! command -v >/dev/null && confirm 'Install Homebrew?'; then
+# Helix
+if confirm 'Link .config/helix/ config files?'; then
+  echo '[1/1] Linking config files'
+  mkdir -p "$HOME/.config/helix/themes"
+  link .config/helix/config.toml .config/helix
+  link .config/helix/languages.toml .config/helix
+  link .config/helix/themes/panda .config/helix/themes
+fi
+
+# Command-line Tools for Xcode
+if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then
+  xcode-select --install
+fi
+
+# Homebrew
+if is_macos && ! command -v brew >/dev/null && confirm 'Install Homebrew?'; then
   echo '[1/1] Installing Homebrew'
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo 'Done'
 fi
 
-if is_macos && confirm 'Set custom macOS defaults?'; then
+# macOS defaults
+if is_macos && confirm 'Write custom macOS defaults?'; then
   if confirm '[1/14] Expand save and print dialogs?'; then
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
