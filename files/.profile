@@ -17,6 +17,18 @@ IS_COLOR="$(tput colors > /dev/null 2>&1 && [ "$(tput colors)" -gt 2 ] && echo 1
 IS_MACOS="$([ "$PLATFORM" = "darwin" ] && echo 1)"
 IS_LINUX="$([ "$PLATFORM" = "linux" ] && echo 1)"
 
+alias reload='exec "$SHELL"'
+
+localedit() {
+  # $EDITOR is set in .profile.d/editor.sh
+  $EDITOR "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
+}
+
+try-source() {
+  # shellcheck disable=SC1090
+  [ -r "$1" ] && . "$1"
+}
+
 case $- in
   *i*) IS_INTERACTIVE=1;;
   *) ;;
@@ -49,12 +61,6 @@ for _file in \
   local \
   motd \
 ; do
-  [ -r "$HOME/.profile.d/$_file.sh" ] && . "$HOME/.profile.d/$_file.sh"
+  try-source "$HOME/.profile.d/$_file.sh"
 done
 unset _file
-
-alias reload='exec "$SHELL"'
-
-localedit() {
-  ${EDITOR:-vi} "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
-}

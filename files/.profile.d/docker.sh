@@ -1,3 +1,11 @@
+# Add Docker to the PATH if it was installed for the user
+export DOCKER_PATH="${DOCKER_PATH:-"$HOME/.docker/bin"}"
+if [ -d "$DOCKER_PATH" ]; then
+  export PATH="$DOCKER_PATH:$PATH"
+else
+  unset DOCKER_PATH
+fi
+
 # Return early if docker is not defined
 if ! command -v docker >/dev/null; then
   return

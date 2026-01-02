@@ -6,28 +6,30 @@ export PS1='
 
 export PS2='… '
 
-# Simple color prompt
+# Color prompt
 if [ -n "$IS_COLOR" ]; then
-  PS1="
-\t
-$(color blue '\W')
-$(color blue '\$') "
-  PS2="$(color blue '…') "
+  PS1='${dotfiles_prompt_err}
+$(color grey '"'\t'"')
+${dotfiles_prompt_ssh}$(color blue '"'\W'"')${dotfiles_prompt_git}
+${dotfiles_prompt_env}$(color blue '"'\$'"') '
+
+  PS2='$(color grey …) '
+
+  PROMPT_COMMAND='dotfiles_prompt_command'
 fi
 
-# Fancy color prompt
-if [ -n "$IS_COLOR" ]; then
-  PROMPT_COMMAND=_prompt_command
-fi
+export dotfiles_prompt_env=''
+export dotfiles_prompt_err=''
+export dotfiles_prompt_git=''
+export dotfiles_prompt_ssh=''
 
-_prompt_command() {
-  PS1="
-\t $(_prompt_error)
-$(color blue '\W')$(_prompt_git_branch)
-$(_prompt_virtualenv)$(_prompt_ssh)$(color blue '\$') "
+dotfiles_prompt_command() {
+  dotfiles_prompt_err=$(_dotfiles_prompt_err $?)
+  dotfiles_prompt_git=$(_dotfiles_prompt_git)
+  dotfiles_prompt_ssh=$(_dotfiles_prompt_ssh)
 }
 
-_prompt_git_branch() {
+_dotfiles_prompt_git() {
   [ -z "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ] && return
   branch="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)"
   modified="$(git status --porcelain | wc -l | tr -d '[:space:]')"
@@ -35,15 +37,14 @@ _prompt_git_branch() {
   [ "$modified" -gt 0 ] && printf ' (%s)' "$(color red "$modified")"
 }
 
-_prompt_error() {
-  # shellcheck disable=SC2181
-  [ $? -ne 0 ] && printf '%s' "$(color red '⨯')"
+_dotfiles_prompt_err() {
+  [ $1 -gt 0 ] && printf '\n%s %s' "$(color grey "Exit status:")" "$(color red "$1")"
 }
 
-_prompt_ssh() {
+_dotfiles_prompt_ssh() {
   [ -n "$SSH_CLIENT" ] && printf '%s ' "$(color yellow '•')"
 }
 
-_prompt_virtualenv() {
+_dotfiles_prompt_env() {
   [ -n "$VIRTUAL_ENV" ] && printf '(%s) ' "$(basename "$VIRTUAL_ENV")"
 }

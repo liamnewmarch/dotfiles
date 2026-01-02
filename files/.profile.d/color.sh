@@ -1,18 +1,19 @@
 color() {
+  local n
   [ -n "$IS_COLOR" ] && case $1 in
-    black  ) _color=0 ;;
-    red    ) _color=1 ;;
-    green  ) _color=2 ;;
-    yellow ) _color=3 ;;
-    blue   ) _color=4 ;;
-    magenta) _color=5 ;;
-    cyan   ) _color=6 ;;
-    white  ) _color=7 ;;
-    *      ) _color=$1;;
+    black  ) n=0 ;;
+    red    ) n=1 ;;
+    green  ) n=2 ;;
+    yellow ) n=3 ;;
+    blue   ) n=4 ;;
+    magenta) n=5 ;;
+    cyan   ) n=6 ;;
+    white  ) n=7 ;;
+    grey   ) n=8 ;;
+    *      ) n=$1;;
   esac
-  [ -n "$_color" ] && printf '\x01%s\x02' "$(tput setaf "$_color")"
+  [ -n "$n" ] && printf '\x01%s\x02' "$(tput setaf "$n")"
   shift
   printf %s "$@"
-  [ -n "$_color" ] && printf '\x01%s\x02' "$(tput sgr0)"
-  unset _color
+  [ -n "$n" ] && printf '\x01%s\x02' "$(tput sgr0)"
 }

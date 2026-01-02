@@ -123,7 +123,7 @@ fi
 # Homebrew
 if is_macos && ! command -v brew >/dev/null && confirm 'Install Homebrew?'; then
   echo '[1/1] Installing Homebrew'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo 'Done'
 fi
 
