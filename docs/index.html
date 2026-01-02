@@ -1,33 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$HOME/.dotfiles"}"
-GITHUB_BASE_URL="https://github.com/liamnewmarch/dotfiles"
-GITHUB_GIT_URL="$GITHUB_BASE_URL.git"
-GITHUB_TGZ_URL="$GITHUB_BASE_URL/archive/refs/heads/main.tar.gz"
-INSTALL_SCRIPT="$DOTFILES_DIR/install.sh"
+DOTFILES_REPO="${DOTFILES_REPO}:-'liamnewmarch/dotfiles'}"
 
-if command -v git >/dev/null; then
-    if [ -d "$DOTFILES_DIR/.git" ]; then
-        git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase || exit 1
-    else
-      git clone --depth 1 "$GITHUB_GIT_URL" "$DOTFILES_DIR" || exit 1
-    fi
-elif command -v curl >/dev/null && command -v tar >/dev/null; then
-  mkdir -p "$DOTFILES_DIR" || exit 1
-  cd "$DOTFILES_DIR" || exit 1
-  curl -sSL "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit 1
-elif command -v wget >/dev/null && command -v tar >/dev/null; then
-  mkdir -p "$DOTFILES_DIR" || exit 1
-  cd "$DOTFILES_DIR" || exit 1
-  wget "$GITHUB_TGZ_URL" | tar --strip-components=1 -xz || exit 1
-else
-  echo 'Error: no way to install'
+check-git() {
+  command -v git
+}
+
+dotfiles-installed() {
+  [ -d "$DOTFILES_DIR/.git" ]
+}
+
+dotfiles-clone() {
+  git clone --depth 1 "https://github.com/${DOTFILES_REPO}.git" "$DOTFILES_DIR"
+}
+
+dotfiles-update() {
+  git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase
+}
+
+run-installer() {
+  "$DOTFILES_DIR/install.sh"
+}
+
+if ! check-git; then
+  echo 'Failed to install; unable to find git in PATH'
   exit 1
 fi
 
-if [ -f "$INSTALL_SCRIPT" ] && [ -x "$INSTALL_SCRIPT" ]; then
-  "$INSTALL_SCRIPT"
+if dotfiles-installed; then
+  if ! dotfiles-update; then
+    echo 'Failed to update'
+    exit 1
+  fi
 else
-  echo "Error: $INSTALL_SCRIPT is not executable"
-  exit 1
+  if ! dotfiles-clone; then
+    echo 'Failed to clone'
+    exit 1
+  fi
+  if ! run-installer; then
+    echo 'Failed to install'
+    exit 1
+  fi
 fi

@@ -1,37 +1,43 @@
 # dotfiles
 
-This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments), configuration files for setting up various command-line tools the way I like.
+This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments).
 
-There are two installation methods depending on where you want to keep the source repo. The default `curl` installer clones this to `~/.dotfiles` in your home directory, but you can also follow the `git` instructions to install the project wherever you choose. Both methods will symlink the necessary files into your home folder.
+See below for instructions to install, but basically running the `install.sh` script creates symlinks in your $HOME dir.
 
-Where possible, scripts were written with POSIX portability in mind. These are located in `~/.profile.d/` with bash-specific scripts in `~/.bashrc`. There are also some optional macOS-specific customisations in the install script – these will be skipped when running on other platforms.
+macOS and Debian are supported. On macOS the installer checks to see if Command-line Tools for Xcode and Homebrew are installed, and prompts to install them if not.
 
-Rather than add local customisations to your `.~/bashrc`, you are encouraged to create a `~/.profile.d/local.sh` file and add per-machine customisations and aliases there.
+After running the install script, aliases, functions and $PATH extensions are organised by tool in ~/.profile.d/*.sh. You can create a ~/.profile.d/local.sh for machine-specific settings – an alias to edit this file and reload it is `localedit`.
 
-## Using the `curl` installer (recommended)
+## Supported tools
 
-*__Requirements:__ `curl`, `git`.*
+* Alacritty (terminal emulator)
+* Helix (editor)
+* Bash
+* tmux
+* APT, Homebrew
 
-The easiest way to get started is to run the following (you can find the [source of this script here](https://raw.githubusercontent.com/liamnewmarch/dotfiles/master/docs/index.html)).
+## Install with `git`
+
+The easiest way to install is to clone this repo and run the `install.sh` script.
+
+```sh
+git clone https://github.com/liamnewmarch/dotfiles.git .dotfiles  # This can be any path
+.dotfiles/install.sh
+```
+
+## Using the `curl` installer
+
+*__Note:__* requires `bash`, `curl` and `git`.
+
+You can also use the online install script which does the above in a more complicated way.
 
 ```sh
 bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
 ```
 
-__Experimental:__ You can change the default installation directory from `~/.dotfiles` to something else by setting `DOTFILES_DIR`.
+Changing the default install directory is supported via the `DOTFILES_DIR` env var
 
 ```sh
 DOTFILES_DIR="$HOME/code/liamnewmarch/dotfiles"
 bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
 ```
-
-## Manual install with `git`
-
-The script above is effectively a wrapper around the following commands. You can run them manually if you prefer.
-
-```
-git clone https://github.com/liamnewmarch/dotfiles.git .dotfiles
-.dotfiles/install.sh
-```
-
-*__Requirements:__ `git`.*
