@@ -32,7 +32,7 @@ yellow = "#f6cb97"
 blue = "#7abaf9"
 magenta = "#f2add6"
 cyan = "#75f8dc"
-white = "#f2f2f2"
+white = "#ffffff"
 
 [cursor]
 style = { blinking = "On" }
