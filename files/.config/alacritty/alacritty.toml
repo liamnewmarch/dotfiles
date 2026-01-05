@@ -26,11 +26,11 @@ white = "#f2f2f2"
 
 [colors.bright]
 black = "#707681"
-red = "#ea436e"
-green = "#75f8dc"
+#red = "#ea436e"  # TODO add bright variant
+#green = "#75f8dc"  # TODO add bright variant
 yellow = "#f6cb97"
 blue = "#7abaf9"
-magenta = "#f2add6"
+#magenta = "#f2add6"  # TODO add bright variant
 cyan = "#75f8dc"
 white = "#ffffff"
 

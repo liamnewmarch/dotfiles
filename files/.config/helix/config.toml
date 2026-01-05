@@ -1,14 +1,15 @@
 theme = "panda"
 
 [editor]
+color-modes = true  # Use colours for NOR, INS, SEL in the status bar
 file-picker.hidden = false  # Show hidden files
 indent-guides.render = true
 rulers = [80, 100, 120]
-soft-wrap.enable = true
+soft-wrap.enable = true  # Use space.B below to toggle
 trim-final-newlines = true
 trim-trailing-whitespace = true
-true-color = true
-whitespace.render = { nbsp = "all", nnbsp = "all" }
+true-color = true  # TODO fix true colour support over SSH
+whitespace.render = { nbsp = "all", nnbsp = "all", tab = "all", space="all" }
 
 [keys.normal]
 # Print the current line's git blame information to the statusline.
