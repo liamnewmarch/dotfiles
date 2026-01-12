@@ -3,12 +3,14 @@
 
 # Editor UI
 "ui.background.separator" = "black"
-"ui.cursor" = { bg = "white", fg = "black-0" }
-"ui.cursor.match" = { modifiers = ["reversed"] }
-"ui.cursor.primary.insert" = { fg = "magenta", modifiers = ["reversed"] }
-"ui.cursor.primary.normal" = { fg = "white", modifiers = ["reversed"] }
-"ui.cursor.primary.select" = { fg = "blue", modifiers = ["reversed"] }
-"ui.cursor.select" = { fg = "white" }
+"ui.cursor" = { bg = "white", modifiers = ["dim"] }
+"ui.cursor.insert" = { fg = "magenta", modifiers = ["reversed"] }
+"ui.cursor.normal" = { fg = "white", modifiers = ["dim", "reversed"] }
+"ui.cursor.match" = { modifiers = ["dim", "reversed"] }
+"ui.cursor.primary.insert" = { bg = "magenta", fg = "black-0" }
+"ui.cursor.primary.normal" = { bg = "white", fg = "black-0" }
+"ui.cursor.primary.select" = { bg = "white", fg = "black-0" }
+"ui.cursor.select" = { fg = "white", modifiers = ["dim", "reversed"] }
 "ui.gutter" = "black"
 "ui.gutter.selected" = "bright-white"
 "ui.linenr" = { fg = "bright-black", modifiers = ["dim"] }
@@ -17,7 +19,8 @@
 "ui.menu.scroll" = "magenta"
 "ui.menu.selected" = { fg = "magenta",  modifiers = ["reversed"] }
 "ui.popup" = { bg = "black-0" }
-"ui.selection" = { bg = "blue", fg="black-0" }
+"ui.selection" = { bg = "blue", fg = "black-0", modifiers = ["dim"] }
+"ui.selection.primary" = { bg = "blue", fg = "black-0", modifiers = [] }
 "ui.statusline" = { bg = "black-1", fg = "white" }
 "ui.statusline.inactive" = { modifiers = ["dim"] }
 "ui.statusline.insert" = { bg = "magenta", fg = "black-0" }
