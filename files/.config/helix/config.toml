@@ -1,6 +1,7 @@
 theme = "panda"
 
 [editor]
+bufferline = "always"
 color-modes = true  # Use colours for NOR, INS, SEL in the status bar
 file-picker.hidden = false  # Show hidden files
 indent-guides.render = true
