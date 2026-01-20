@@ -1,10 +1,11 @@
 [window]
+# blur = true
+# decorations = "Buttonless"  # Disabled until padding is fixed on macOS
 dimensions = { columns = 120, lines = 42 }
-padding = { x = 13, y = 13 }
 dynamic_padding = true
-#decorations = "Buttonless" # Disabled until padding is fixed on macOS
-#opacity = 0.9 # Disabled because setting to < 1 causes a window border on macOS
-blur = true
+padding = { x = 13, y = 13 }
+# opacity = 0.9  # Disabled because setting to < 1 causes a window border on macOS
+option_as_alt = 'OnlyRight'
 
 [font]
 normal = { family = "Fira Code", style = "Retina" }
