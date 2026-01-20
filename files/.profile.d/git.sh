@@ -87,6 +87,7 @@ __git_complete gmf git_merge
 
 # Push
 alias gp='git push'
+alias gp!='git push --force-with-lease'
 alias gpf='git push --force-with-lease'
 alias gpuo='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 __git_complete gp git_push
