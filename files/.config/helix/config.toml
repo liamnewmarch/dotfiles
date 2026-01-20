@@ -9,11 +9,16 @@ rulers = [80, 100, 120]
 soft-wrap.enable = true  # Use space.B below to toggle
 trim-final-newlines = true
 trim-trailing-whitespace = true
-true-color = true  # TODO fix true colour support over SSH
+true-color = true
 whitespace.render = { nbsp = "all", nnbsp = "all", tab = "all", space="all" }
 
 [keys.normal]
-# Print the current line's git blame information to the statusline.
-space.B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
-# Toggle soft wrap with alt-Z
-space.W = ":toggle soft-wrap.enable"
+G = 'goto_file_end'
+S-tab = ':buffer-previous'
+space.W = ':toggle soft-wrap.enable'
+tab = ':buffer-next'
+
+[keys.normal.space.g]
+b = ':echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}'
+d = ':sh git blame -L %{cursor_line},+1 %{buffer_name} | awk "{print $1}" | xargs git show --pretty=oneline'
+g = 'changed_file_picker'
