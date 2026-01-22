@@ -1,15 +1,20 @@
-[language-server.vscode-eslint-language-server.config] 
-validate = "on" 
-experimental = { useFlatConfig = false } 
-rulesCustomizations = [] 
-run = "onType" 
-problems = { shortenToSingleLine = false } 
+[language-server.pylsp.config]
+# Tweak pycodestyle’s max-line-length to match black’s default line-length.
+# This will need tweaking per-project in $project_root/.helix/language.toml
+pylsp.plugins.pycodestyle.maxLineLength = 88
+
+[language-server.vscode-eslint-language-server.config]
+experimental.useFlatConfig = false
 nodePath = ""
+problems.shortenToSingleLine = false
+rulesCustomizations = []
+run = "onType"
+validate = "on"
 
 [[language]]
 name = "javascript"
 language-servers = [
-  "typescript-language-server", # optional
+  "typescript-language-server",
   "vscode-eslint-language-server",
 ]
 
@@ -33,3 +38,7 @@ language-servers = [
   "typescript-language-server",
   "vscode-eslint-language-server",
 ]
+
+[[language]]
+name = "python"
+auto-format = true
