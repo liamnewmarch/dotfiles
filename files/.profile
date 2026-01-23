@@ -44,6 +44,7 @@ for _file in \
   git \
   grep \
   ip \
+  less \
   ls \
   mkcd \
   ncdu \
