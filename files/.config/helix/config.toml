@@ -5,7 +5,9 @@ bufferline = "always"
 color-modes = true  # Use colours for NOR, INS, SEL in the status bar
 file-picker.hidden = false  # Show hidden files
 indent-guides.render = true
+popup-border = "all"
 rulers = [80, 100, 120]
+scroll-lines = 1
 soft-wrap.enable = true  # Use space.B below to toggle
 trim-final-newlines = true
 trim-trailing-whitespace = true
@@ -13,12 +15,14 @@ true-color = true
 whitespace.render = { nbsp = "all", nnbsp = "all", tab = "all", space="all" }
 
 [keys.normal]
-G = 'goto_file_end'
-S-tab = ':buffer-previous'
-space.W = ':toggle soft-wrap.enable'
-tab = ':buffer-next'
+G = "goto_file_end"
+S-tab = ":buffer-previous"
+space.W = ":toggle soft-wrap.enable"
+tab = ":buffer-next"
 
 [keys.normal.space.g]
-b = ':echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}'
-d = ':sh git blame -L %{cursor_line},+1 %{buffer_name} | awk "{print $1}" | xargs git show --pretty=oneline'
-g = 'changed_file_picker'
+b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -n 1 --pretty='%%h - %%s (%%cr) <%%an>'}"
+d = ":sh git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -n 1"
+D = ":sh git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -n 1 --patch"
+g = "changed_file_picker"
+"?" = ":echo %sh{git rev-parse --abbrev-ref HEAD}"
