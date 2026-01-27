@@ -100,10 +100,17 @@ if confirm '[Deprecated] Link .vimrc and install plugins?'; then
 fi
 
 # Alacritty
-if confirm 'Link .config/alacritty/ config?'; then
+if confirm '[Deprecated] Link .config/alacritty/ config?'; then
   echo '[1/1] Linking config'
   mkdir -p "$HOME/.config/alacritty"
   link .config/alacritty/alacritty.toml .config/alacritty
+fi
+
+# Ghostty
+if confirm 'Link .config/ghostty/ files?'; then
+  echo '[1/1] Linking config files'
+  mkdir -p "$HOME/.config/ghostty"
+  link .config/ghostty/config .config/ghostty
 fi
 
 # Helix

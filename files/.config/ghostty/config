@@ -1,0 +1,28 @@
+theme = Monokai Remastered
+
+background = black
+
+cursor-color = white
+cursor-opacity = 0.8
+
+font-family = Fira Code
+font-family = Fira Code Retina
+font-size = 13
+
+initial-command = /opt/homebrew/bin/tmux
+
+keybind = super+a=text:\x01
+keybind = super+k=text:\x0b
+
+quit-after-last-window-closed = true
+
+shell-integration-features = no-cursor
+
+title = " "
+
+window-padding-balance = true
+window-padding-x = 13
+window-padding-y = 13
+
+window-width = 120
+window-height = 42
