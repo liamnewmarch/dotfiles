@@ -109,8 +109,9 @@ fi
 # Ghostty
 if confirm 'Link .config/ghostty/ files?'; then
   echo '[1/1] Linking config files'
-  mkdir -p "$HOME/.config/ghostty"
+  mkdir -p "$HOME/.config/ghostty/themes"
   link .config/ghostty/config .config/ghostty
+  link .config/ghostty/themes/llama .config/ghostty/themes
 fi
 
 # Helix

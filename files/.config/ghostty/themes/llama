@@ -1,0 +1,31 @@
+# Theme: Llama dark
+# Author: Liam Newmarch
+
+background = 000000
+foreground = f2f2f2
+
+cursor-color = f2f2f2
+cursor-text = 000000
+
+selection-background =
+selection-foreground =
+
+# normal
+palette =  0=29292a
+palette =  1=ea436e
+palette =  2=75f8dc
+palette =  3=f4ba78
+palette =  4=7caff8
+palette =  5=ed7db2
+palette =  6=75f8dc
+palette =  7=f2f2f2
+
+# bright
+palette =  8=707681
+palette =  9=ea436e
+palette = 10=75f8dc
+palette = 11=f6cb97
+palette = 12=7abaf9
+palette = 12=f2add6
+palette = 13=75f8dc
+palette = 14=ffffff

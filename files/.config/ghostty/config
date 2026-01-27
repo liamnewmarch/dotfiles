@@ -1,9 +1,4 @@
-theme = Monokai Remastered
-
-background = black
-
-cursor-color = white
-cursor-opacity = 0.8
+theme = llama
 
 font-family = Fira Code
 font-family = Fira Code Retina
@@ -16,7 +11,7 @@ keybind = super+k=text:\x0b
 
 quit-after-last-window-closed = true
 
-shell-integration-features = no-cursor
+shell-integration = none
 
 title = " "
 
