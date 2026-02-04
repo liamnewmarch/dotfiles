@@ -12,6 +12,9 @@ keybind = super+k=text:\x0b
 quit-after-last-window-closed = true
 
 shell-integration = none
+shell-integration-features = false
+
+term = xterm-256color
 
 title = " "
 
