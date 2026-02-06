@@ -9,6 +9,8 @@ initial-command = /opt/homebrew/bin/tmux
 keybind = super+a=text:\x01
 keybind = super+k=text:\x0b
 
+macos-option-as-alt = left
+
 quit-after-last-window-closed = true
 
 shell-integration = none
