@@ -8,6 +8,8 @@ initial-command = /opt/homebrew/bin/tmux
 
 keybind = super+a=text:\x01
 keybind = super+k=text:\x0b
+keybind = super+minus=new_split:down
+keybind = super+backslash=new_split:right
 
 macos-option-as-alt = left
 
