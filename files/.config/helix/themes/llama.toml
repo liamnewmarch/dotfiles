@@ -1,8 +1,11 @@
-# Theme: Panda (heavily modified)
+# Theme: Llama
 # Author: Liam Newmarch
 
 # Editor UI
-"ui.background.separator" = "black"
+"ui.background.separator" = "bright-black"
+"ui.bufferline" = { fg = "white", modifiers = ["dim"] }
+"ui.bufferline.active" = { bg = "white", fg = "black", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "black-1" }
 "ui.cursor" = { bg = "white", modifiers = ["dim"] }
 "ui.cursor.insert" = { fg = "magenta", modifiers = ["reversed"] }
 "ui.cursor.normal" = { fg = "white", modifiers = ["dim", "reversed"] }
@@ -55,7 +58,7 @@
 "punctuation.bracket" = "#1F7CCD"
 "special" = "#F56BA6"
 "string"  = "#31F3D1"
-"tag" = { fg = "light-magenta", modifiers = ["dim"] }
+"tag" = "magenta"
 "type" = "#87BCF6"
 "type.builtin" = "#F56BA6"
 "type.enum.variant" = "white"

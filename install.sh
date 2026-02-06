@@ -120,7 +120,7 @@ if confirm 'Link .config/helix/ config files?'; then
   mkdir -p "$HOME/.config/helix/themes"
   link .config/helix/config.toml .config/helix
   link .config/helix/languages.toml .config/helix
-  link .config/helix/themes/panda.toml .config/helix/themes
+  link .config/helix/themes/llama.toml .config/helix/themes
 fi
 
 # Command-line Tools for Xcode
