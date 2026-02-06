@@ -11,6 +11,7 @@ scroll-lines = 1
 soft-wrap.enable = true  # Use space.W below to toggle
 trim-final-newlines = true
 trim-trailing-whitespace = true
+true-color = true
 whitespace.render = { nbsp = "all", nnbsp = "all", space = "all", tab = "all" }
 
 [keys.normal]
