@@ -18,8 +18,13 @@ whitespace.render = { nbsp = "all", nnbsp = "all", space = "all", tab = "all" }
 G = "goto_file_end"
 S-tab = ":buffer-previous"
 X = "select_line_above"
+g.G = "goto_file_end"
 space.W = ":toggle soft-wrap.enable"
 tab = ":buffer-next"
+
+[keys.select]
+G = "extend_to_file_end"
+g.G = "extend_to_file_end"
 
 [keys.normal.C-g]
 a = ":echo Git added: %sh{git add %{buffer_name} && echo '%{buffer_name}'}"
