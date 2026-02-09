@@ -11,7 +11,7 @@ keybind = super+k=text:\x0b
 keybind = super+minus=new_split:down
 keybind = super+backslash=new_split:right
 
-macos-option-as-alt = left
+macos-option-as-alt = right
 
 quit-after-last-window-closed = true
 
