@@ -57,28 +57,11 @@ One recommended use for this file is to set a host nickname which is used by the
 export HOST_NICKNAME='My machine'
 ```
 
-## Install with `git`
+## Installation
 
-The easiest way to install is to clone this repo and run the `install.sh` script.
-
-```sh
-git clone https://github.com/liamnewmarch/dotfiles.git .dotfiles  # This can be any path
-.dotfiles/install.sh
-```
-
-## Using the `curl` installer
-
-*__Note:__* requires `bash`, `curl` and `git`.
-
-You can also use the online install script which does the above in a more complicated way.
+Clone the repo to `~/.dotfiles` and run the installer:
 
 ```sh
-bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
-```
-
-Changing the default install directory is supported via the `DOTFILES_DIR` env var
-
-```sh
-DOTFILES_DIR="$HOME/code/liamnewmarch/dotfiles"
-bash -c "$(curl -fsSL https://liamnewmarch.github.io/dotfiles)"
+git clone https://github.com/liamnewmarch/dotfiles.git ~/.dotfiles
+~/.dotfiles/install.sh
 ```
