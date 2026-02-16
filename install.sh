@@ -66,45 +66,6 @@ if confirm 'Link .gitconfig and .gitignore?'; then
   echo 'Done'
 fi
 
-# Tmux
-if confirm 'Link .tmux.conf and install theme?'; then
-  echo '[1/2] Installing tmux-themepack'
-  github jimeh/tmux-themepack "$HOME/.tmux/themes"
-  echo '[2/2] Linking file'
-  link .tmux.conf
-  echo 'Done'
-fi
-
-# Vim
-if confirm '[Deprecated] Link .vimrc and install plugins?'; then
-  plugins=(
-    tpope/vim-sensible
-    ctrlpvim/ctrlp.vim
-    dense-analysis/ale
-    airblade/vim-gitgutter
-    junegunn/goyo.vim
-    Yggdroot/indentLine
-    tpope/vim-fugitive
-    preservim/nerdtree
-    editorconfig/editorconfig-vim
-  )
-  steps=$(( ${#plugins[@]} + 1 ))
-  for index in "${!plugins[@]}"; do
-    plugin="${plugins[$index]}"
-    echo "[$(( index + 1 ))/${steps}] Install ${plugin}"
-    github "$plugin" "$HOME/.vim/pack/custom/start"
-  done
-  echo "[${steps}/${steps}] Linking config file"
-  link .vimrc
-  unset index plugin plugins steps
-fi
-
-# Alacritty
-if confirm '[Deprecated] Link .config/alacritty/ config?'; then
-  echo '[1/1] Linking config'
-  mkdir -p "$HOME/.config/alacritty"
-  link .config/alacritty/alacritty.toml .config/alacritty
-fi
 
 # Ghostty
 if confirm 'Link .config/ghostty/ files?'; then

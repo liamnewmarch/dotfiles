@@ -54,7 +54,6 @@ for _file in \
   python \
   rust \
   temp \
-  tmux \
   top \
   tree \
   update \

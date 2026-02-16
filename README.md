@@ -2,9 +2,9 @@
 
 This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments) – config files for the command-line tools I use in my daily workflow.
 
-I use bash shell on macOS and Debian. These are the only supported combinations for now. On macOS, the installer checks to see if Command-line Tools for Xcode and Homebrew are installed, and prompts to install them if not.
+I use bash shell on macOS and Debian. These are the only supported platform/shell combinations. On macOS, the installer can also optionally install Command-line Tools for Xcode and Homebrew if they're not already present.
 
-If you’re interested in trying this out, see the installation instructions below. Note that the `install.sh` script creates symlinks in your `$HOME` dir. This could lead to data loss, so __make sure to backup your files__ and maybe try it in fresh user/home directory first.
+The `install.sh` script creates symlinks in your `$HOME` directory, which could potentially overwrite existing files. __Make sure to backup your files first__ and consider testing in a fresh user directory.
 
 
 ## What’s included
@@ -14,7 +14,6 @@ If you’re interested in trying this out, see the installation instructions bel
 * Ghostty (terminal emulator)
 * Helix (editor)
 * Bash
-* tmux
 * Git
 
 ### Env vars
