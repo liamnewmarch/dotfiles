@@ -10,6 +10,8 @@ cursor-text = #000000
 selection-background = #7caff8
 selection-foreground = #000000
 
+split-divider-color = #7caff8
+
 # normal
 palette =  0=#29292a
 palette =  1=#ea436e
