@@ -27,6 +27,7 @@ __git_complete gap git_add
 # Branch
 alias gb='git branch'
 alias gba='git branch --all'
+alias gbc='git branch --merged origin/main | grep -vE "^\s*(\*|dev|develop|main|master|stage|staging)" | xargs -n 1 git branch -d'
 alias gbd='_git_default_branch'
 __git_complete gb git_branch
 __git_complete gba git_branch
