@@ -26,6 +26,10 @@ language-servers = [
 ]
 
 [[language]]
+name = "html"
+formatter = { command = 'superhtml', args = ["fmt", "--stdin"] }
+
+[[language]]
 name = "typescript"
 language-servers = [
   "typescript-language-server",
