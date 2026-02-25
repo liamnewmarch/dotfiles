@@ -1,10 +1,13 @@
-# Return early if python3 is not defined
-if ! command -v python3 >/dev/null; then
-  return
+if command -v uv >/dev/null; then
+  alias python='uv run python'
+elif ! command -v python >/dev/null && command -v python3 >/dev/null; then
+  alias python='python3'
 fi
 
-export PYTHONDONTWRITEBYTECODE=1
-export PYTHONPYCACHEPREFIX="$HOME/.cache/python"
-export VIRTUAL_ENV_DISABLE_PROMPT=1
+if command -v python >/dev/null; then
+  export PYTHONDONTWRITEBYTECODE=1
+  export PYTHONPYCACHEPREFIX="$HOME/.cache/python"
 
-alias serve='python3 -m http.server'
+  alias django='uv run django'
+  alias serve='python -m http.server'
+fi

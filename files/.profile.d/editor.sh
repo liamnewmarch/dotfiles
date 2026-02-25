@@ -1,7 +1,9 @@
 # Set the default editor to Helix
-
 if command -v hx >/dev/null; then
   export EDITOR='hx'
+
+  alias helixedit='hx ~/.config/helix/'
+  alias he='helixedit'
 fi
 
 if [ -n "$EDITOR" ]; then

@@ -17,11 +17,27 @@ IS_COLOR="$(tput colors > /dev/null 2>&1 && [ "$(tput colors)" -gt 2 ] && echo 1
 IS_MACOS="$([ "$PLATFORM" = "darwin" ] && echo 1)"
 IS_LINUX="$([ "$PLATFORM" = "linux" ] && echo 1)"
 
+# Defaults
+export MAKE="${MAKE:-make}"
+export PAGER="${PAGER:-less}"
+
+# Generic commands (see also .profile.d/editor.sh)
+alias page='$PAGER'
+alias shell='$SHELL'
+
+# Shortcuts
+alias dfe='dotfilesedit'
+alias le='localedit'
 alias reload='exec "$SHELL"'
 
+# Edit dotfiles and reload (all files)
+dotfilesedit() {
+  edit "$DOTFILES_DIR" && reload
+}
+
+# Edit .profile.d/local.sh and reload (just that one file)
 localedit() {
-  # $EDITOR is set in .profile.d/editor.sh
-  $EDITOR "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
+  edit "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
 }
 
 try-source() {
@@ -41,6 +57,7 @@ for _file in \
   color \
   docker \
   editor \
+  ghostty \
   git \
   grep \
   ip \
