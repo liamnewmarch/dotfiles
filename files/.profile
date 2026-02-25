@@ -25,21 +25,6 @@ export PAGER="${PAGER:-less}"
 alias page='$PAGER'
 alias shell='$SHELL'
 
-# Shortcuts
-alias dfe='dotfilesedit'
-alias le='localedit'
-alias reload='exec "$SHELL"'
-
-# Edit dotfiles and reload (all files)
-dotfilesedit() {
-  edit "$DOTFILES_DIR" && reload
-}
-
-# Edit .profile.d/local.sh and reload (just that one file)
-localedit() {
-  edit "$HOME/.profile.d/local.sh" && . "$HOME/.profile.d/local.sh"
-}
-
 try-source() {
   # shellcheck disable=SC1090
   [ -r "$1" ] && . "$1"
