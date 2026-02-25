@@ -28,3 +28,5 @@ update() {
     fi
   fi
 }
+
+alias up='update'
