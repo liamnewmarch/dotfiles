@@ -19,6 +19,13 @@ rulesCustomizations = []
 run = "onType"
 validate = "on"
 
+[language-server.vscode-html-language-server.config]
+format.contentUnformatted = "code,css,pre,script,svg,textarea"
+format.extraLiners = ""
+format.indentInnerHtml = true
+format.wrapAttributes = "preserve"
+provideFormatter = true
+
 [[language]]
 name = "htmldjango"
 block-comment-tokens = [
@@ -53,11 +60,7 @@ language-servers = [
 
 [[language]]
 name = "html"
-# TODO find a HTML formatter which supports editorconfig and has sane defaults
-# - vscode-html-language-server unindents <head> and <body> and adds spacing around them which is insane
-# - prettier always self-closes void elements which is a remnant from XHTML and is insane
-# - superhtml only supports tabs except for visual alignment which is insane
-formatter = { command = "prettier", args = ["--parser", "html"] }
+auto-format = true
 language-servers = [
   "vscode-html-language-server",
   "superhtml",
