@@ -1,3 +1,11 @@
+[language-server.emmet-language-server]
+command = "emmet-language-server"
+args = ["--stdio"]
+
+[language-server.tailwindcss-language-server]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
 [language-server.pylsp.config]
 # Tweak pycodestyle’s max-line-length to match black’s default line-length.
 # This will need tweaking per-project in $project_root/.helix/language.toml
@@ -10,6 +18,24 @@ problems.shortenToSingleLine = false
 rulesCustomizations = []
 run = "onType"
 validate = "on"
+
+[[language]]
+name = "htmldjango"
+block-comment-tokens = [
+  { start = "{#", end = "#}" },
+  { start = "{% comment %}", end = "{% endcomment %}" },
+]
+file-types = [
+  { glob = "templates/**/*.html" },
+]
+formatter = { command = "djlint", args = ["-", "--quiet", "--reformat"] }
+language-servers = [
+  "djlsp",
+  "vscode-html-language-server",
+  "superhtml",
+  "emmet-language-server",
+  # "tailwindcss-language-server",  # enable per-project
+]
 
 [[language]]
 name = "javascript"
@@ -27,7 +53,17 @@ language-servers = [
 
 [[language]]
 name = "html"
-formatter = { command = 'superhtml', args = ["fmt", "--stdin"] }
+# TODO find a HTML formatter which supports editorconfig and has sane defaults
+# - vscode-html-language-server unindents <head> and <body> and adds spacing around them which is insane
+# - prettier always self-closes void elements which is a remnant from XHTML and is insane
+# - superhtml only supports tabs except for visual alignment which is insane
+formatter = { command = "prettier", args = ["--parser", "html"] }
+language-servers = [
+  "vscode-html-language-server",
+  "superhtml",
+  "emmet-language-server",
+  # "tailwindcss-language-server",  # enable per-project
+]
 
 [[language]]
 name = "typescript"
