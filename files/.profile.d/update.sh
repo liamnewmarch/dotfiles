@@ -2,7 +2,7 @@ update() {
   # Update dotfiles
   if command -v git >/dev/null; then
     printf '%s\n' "$(color blue 'Updating dotfiles')"
-    git -C "$HOME/.profile.d" pull --autostash --ff-only --no-rebase
+    dotfiles update
   fi
 
   # Update APT packages

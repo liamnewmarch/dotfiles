@@ -16,9 +16,18 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 * Bash
 * Git
 
+### The `dotfiles` command
+
+The `dotfiles` command groups together some useful shortcuts for managing dotfiles, such as `dotfiles update`, `dotfiles edit`, and `dotfiles restart`. See `dotfiles help` for usage.
+
+Two abbreviated aliases are provided to help make editing common files quicker:
+
+* `dfe` - edit files in `~/.profile.d/` in the default `$EDITOR`.
+  * You can also use `dfe [file]` to quickly edit `~/.profile.d/[file].sh`.
+* `dle` - edit the `~/.profile.d/local.sh` in the default `$EDITOR`.
+
 ### Env vars
 
-* `DOTFILES_DIR` – the dotfiles installation path.
 * `IS_COLOR` – whether the current terminal supports colour.
 * `IS_INTERACTIVE` – whether the shell is running interactively.
 * `IS_LINUX` – whether the current platform is `'Linux'`.
@@ -27,7 +36,8 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 ### Aliases
 
 * `edit` – edit files in the default `$EDITOR`.
-* `localedit` – edit `~/.profile.d/local.sh` in the default `$EDITOR`.
+* `ghosttyedit` (alias `ge`) – edit `~/.config/ghostty/` in the default `$EDITOR`.
+* `helixedit` (alias `he`) – edit `~/.config/helix/` in the default `$EDITOR`.
 * `mkcd` – create a directory and immediately `cd` into it. Supports nested directories, too.
 * `serve` – start a HTTP server to serve files in the current directory.
 * `temp` – create a directory in `/tmp` and start a shell in it.
@@ -35,11 +45,12 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 * `showfile` – (macOS) remove attribute flags to hide a file from Finder.
 * `sudoedit` – (macOS) edit files as root in the default `$EDITOR` with `sudo -e`.
 
-There are also abbreviated aliases for some commands, e.g. `gst` is an alias for `git status`. These are provided for:
+There are also abbreviated aliases for some commands. These are provided for:
 
-* Docker - see `~/.profile.d/docker.sh`.
-* Git – see `~/.profile.d/git.sh`.
-* npm – see `~/.profile.d/npm.sh`.
+* Docker – see `dotfiles edit docker`.
+* Dotfiles – see `dotfiles edit dotfiles`.
+* Git – see `dotfiles edit git`.
+* npm – see `dotfiles edit npm`.
 
 ### Functions
 
