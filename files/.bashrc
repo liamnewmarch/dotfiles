@@ -16,8 +16,10 @@ shopt -s histappend
 shopt -s nocaseglob
 
 # History settings
-PROMPT_COMMAND="$PROMPT_COMMAND; history -a"
-HISTSIZE=
-HISTFILESIZE=
-HISTCONTROL="erasedups:ignoreboth"
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+export HISTSIZE=
+export HISTFILESIZE=
+export HISTCONTROL='erasedups:ignoreboth'
+export HISTIGNORE='&:[ ]*:exit:ls:bg:fg:history:clear'
+
+# Append `history -a` to the PROMPT_COMMAND with a semicolon if necessary
+export PROMPT_COMMAND="${PROMPT_COMMAND:+"$PROMPT_COMMAND;"}history -a"
