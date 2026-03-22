@@ -10,6 +10,6 @@ if command -v python >/dev/null; then
   export PYTHONDONTWRITEBYTECODE=1
   export PYTHONPYCACHEPREFIX="$HOME/.cache/python"
 
-  alias django='uv run django'
+  alias django='uv run manage.py'
   alias serve='python -m http.server'
 fi
