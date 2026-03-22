@@ -1,4 +1,6 @@
 if command -v uv >/dev/null; then
+  # `uv tool` installs binaries to ~/.local/bin
+  export PATH="$HOME/.local/bin:$PATH"
   alias python='uv run python'
 elif ! command -v python >/dev/null && command -v python3 >/dev/null; then
   alias python='python3'
