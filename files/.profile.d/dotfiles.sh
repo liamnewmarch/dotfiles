@@ -1,7 +1,7 @@
 dotfiles() {
   case $1 in
     ''|help|'-h'|'--help')
-      echo 'Usage: dotfiles [edit|path|restart|update]'
+      echo 'Usage: dotfiles [ edit | help | path | reload | reset | restart | update ]'
       ;;
     edit)
       local path
@@ -23,7 +23,11 @@ dotfiles() {
       dotfiles_prompt_ssh=$(_dotfiles_prompt_ssh)
       export dotfiles_prompt_err dotfiles_prompt_git dotfiles_prompt_ssh
       ;;
-    restart)
+    reload)
+      # shellcheck source=/dev/null
+      . "$HOME/.profile"
+      ;;
+    reset|restart)
       clear
       exec env -i HOME="$HOME" LANG="$LANG" SHELL="$SHELL" TERM="$TERM" USER="$USER" "$SHELL" -li
       ;;
