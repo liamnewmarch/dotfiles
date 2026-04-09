@@ -7,8 +7,12 @@
 # one another where possible (scripts depending on `color` being a
 # notable exception).
 
+# Reset PATH, allowing .profile to be sourced multiple times e.g. by `dotfiles reload`
+export DOTFILES_INITIAL_PATH="${DOTFILES_INITIAL_PATH:-"$PATH"}"
+export PATH="$DOTFILES_INITIAL_PATH"
+
 # Some platform variables that are used by the profile.d scripts
-export PLATFORM IS_COLOR IS_INTERACTIVE IS_MACOS IS_LINUX
+export IS_COLOR IS_INTERACTIVE IS_MACOS IS_LINUX PLATFORM
 
 PLATFORM="$(uname -s | tr '[:upper:]' '[:lower:]')"
 IS_COLOR="$(tput colors > /dev/null 2>&1 && [ "$(tput colors)" -gt 2 ] && echo 1)"
