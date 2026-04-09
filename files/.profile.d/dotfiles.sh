@@ -1,19 +1,18 @@
 dotfiles() {
   case $1 in
-    '')
-      dotfiles help
+    ''|help|'-h'|'--help')
+      echo 'Usage: dotfiles [edit|path|restart|update]'
       ;;
     edit)
       local path
-      path=$(dotfiles path)
       if [ -n "$2" ]; then
-        path="$path/files/.profile.d/$2.sh"
+        path="$(dotfiles path)/files/.profile.d/$2.sh"
+        # shellcheck source=/dev/null
+        $EDITOR "$path" && . "$path"
+      else
+        path="$(dotfiles path)/"
+        $EDITOR "$path" && dotfiles restart
       fi
-      # shellcheck source=/dev/null
-      $EDITOR "$path" && . "$path"
-      ;;
-    help)
-      echo 'Usage: dotfiles [edit|path|reload|update]'
       ;;
     path)
       dirname "$(dirname "$(realpath "$HOME"/.profile)")"
@@ -25,6 +24,7 @@ dotfiles() {
       export dotfiles_prompt_err dotfiles_prompt_git dotfiles_prompt_ssh
       ;;
     restart)
+      clear
       exec env -i HOME="$HOME" LANG="$LANG" SHELL="$SHELL" TERM="$TERM" USER="$USER" "$SHELL" -li
       ;;
     update)
