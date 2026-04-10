@@ -10,16 +10,15 @@ temp() {
     echo "Created temp dir $tempdir."
   fi
 
-  printf 'Starting a new %s shell. Type exit to return.\n\n' "$PS_SHELL"
-  $PS_SHELL
+  printf 'Starting a new %s shell. Type exit to return.\n\n' "$SHELL"
+  $SHELL
 
   # Remove the temp directory
   popd > /dev/null || true
   rm -rf "$tempdir"
 
   if command -v tput > /dev/null; then
-    # Switch to normal screen and prepeat next output
-    echo 'Removed temp dir.'
+    # Switch to normal screen and repeat next output
     tput rmcup
   fi
 
