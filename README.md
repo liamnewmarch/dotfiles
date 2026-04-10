@@ -4,8 +4,7 @@ This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_h
 
 I use bash shell on macOS and Debian. These are the only supported platform/shell combinations. On macOS, the installer can also optionally install Command-line Tools for Xcode and Homebrew if they're not already present.
 
-The `install.sh` script creates symlinks in your `$HOME` directory, which could potentially overwrite existing files. __Make sure to backup your files first__ and consider testing in a fresh user directory.
-
+The `install.sh` script creates symlinks in your `$HOME` directory, which could potentially overwrite existing files. __Make sure to back up your files first__ and consider testing in a fresh user directory.
 
 ## What’s included
 
@@ -18,13 +17,13 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 
 ### The `dotfiles` command
 
-The `dotfiles` command groups together some useful shortcuts for managing dotfiles, such as `dotfiles update`, `dotfiles edit`, and `dotfiles restart`. See `dotfiles help` for usage.
-
-Two abbreviated aliases are provided to help make editing common files quicker:
-
-* `dfe` - edit files in `~/.profile.d/` in the default `$EDITOR`.
-  * You can also use `dfe [file]` to quickly edit `~/.profile.d/[file].sh`.
-* `dle` - edit the `~/.profile.d/local.sh` in the default `$EDITOR`.
+* `dotfiles edit` (alias `dfe`) – open the dotfiles repo in `$EDITOR`. Changes are sourced automatically.
+* `dotfiles edit [file]` (alias `dfe [file]`) – open a specific `~/.profile.d/[file].sh` in `$EDITOR`. Changes are sourced automatically.
+* `dotfiles edit local` (alias `dfl`) – open `~/.profile.d/local.sh` in `$EDITOR`. Changes are sourced automatically.
+* `dotfiles reload` – re-source `~/.profile` in the current shell.
+* `dotfiles restart` – start a fresh login shell, replacing the current one.
+* `dotfiles update` – pull the latest changes from git.
+* `dotfiles path` – print the path to the dotfiles repo.
 
 ### Env vars
 
@@ -56,11 +55,11 @@ There are also abbreviated aliases for some commands. These are provided for:
 
 * `color` – print a string in the specified color, e.g. `echo "$(color blue 'This text is blue')"`.
 * `motd` – prints a Message Of The Day string for new shells. Note: this is similar but unrelated to `/etc/motd`.
-* `update` – updates the local dotfiles repo, then update system packages through Homebrew or APT.
+* `update` (alias `up`) – updates the local dotfiles repo, then updates system packages through Homebrew or APT.
 
 ### Local modifications
 
-Machine specific settings and overrides can go in `~/.profile.d/local.sh`. There’s an alias to edit this file in the default $EDITOR and immediately source it, `localedit`.
+Machine specific settings and overrides can go in `~/.profile.d/local.sh`. Use `dfl` to edit this file in the default `$EDITOR` and immediately source it.
 
 One recommended use for this file is to set a host nickname which is used by the `motd` function:
 
