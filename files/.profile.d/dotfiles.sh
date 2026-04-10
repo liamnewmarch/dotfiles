@@ -17,12 +17,6 @@ dotfiles() {
     path)
       dirname "$(dirname "$(realpath "$HOME"/.profile)")"
       ;;
-    prompt)
-      dotfiles_prompt_err=$(_dotfiles_prompt_err $?)
-      dotfiles_prompt_git=$(_dotfiles_prompt_git)
-      dotfiles_prompt_ssh=$(_dotfiles_prompt_ssh)
-      export dotfiles_prompt_err dotfiles_prompt_git dotfiles_prompt_ssh
-      ;;
     reload)
       # shellcheck source=/dev/null
       . "$HOME/.profile"
