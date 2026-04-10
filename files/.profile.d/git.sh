@@ -113,7 +113,7 @@ __git_complete grbm git_rebase
 alias grm='git rm'
 alias grmc='git rm --cached'
 __git_complete grm git_rm
-__git_complete grm git_rm
+__git_complete grmc git_rm
 
 # Reset
 alias grs='git reset'
