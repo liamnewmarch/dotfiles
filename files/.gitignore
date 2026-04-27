@@ -1,9 +1,11 @@
-__pycache__/
+*.py[cod]
+*env/
 .DS_Store
+.claude/
 .envrc
 .helix/
 .mypy_cache/
 .vscode/
-*.py[cod]
-*env/
+CLAUDE.md
+__pycache__/
 node_modules/
