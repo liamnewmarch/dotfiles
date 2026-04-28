@@ -71,7 +71,7 @@ _dotfiles_update_prompt_git() {
   if [ -n "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
     branch="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)"
     modified="$(git status --porcelain | wc -l | tr -d '[:space:]')"
-    printf ' ⌥ %s' "$(color green "$branch")"
+    printf ' %s %s' "$(color grey '⌥')" "$(color green "$branch")"
     if [ "$modified" -gt 0 ]; then
       printf ' (%s)' "$(color red "$modified")"
     fi
