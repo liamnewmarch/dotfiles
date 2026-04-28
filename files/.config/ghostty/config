@@ -1,7 +1,7 @@
 theme = llama
 
-font-family = Fira Code
 font-family = Fira Code Retina
+font-family = Fira Code
 font-size = 13
 
 macos-option-as-alt = right
