@@ -24,6 +24,7 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 * `dotfiles restart` (alias `dotfiles reset`) – start a fresh login shell, replacing the current one.
 * `dotfiles update` – pull the latest changes from git.
 * `dotfiles path` – print the path to the dotfiles repo.
+* `dotfiles doctor` – verify symlinks, repo state, and expected tools. Exits non-zero if anything looks wrong.
 
 ### Env vars
 
@@ -75,3 +76,7 @@ Clone the repo to `~/.dotfiles` and run the installer:
 git clone https://github.com/liamnewmarch/dotfiles.git ~/.dotfiles
 ~/.dotfiles/install.sh
 ```
+
+## Uninstallation
+
+To remove the symlinks `install.sh` created, run `~/.dotfiles/uninstall.sh`. It only removes symlinks that point into the dotfiles repo, and does not revert macOS defaults or uninstall Homebrew.

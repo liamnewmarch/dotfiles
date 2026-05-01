@@ -4,7 +4,7 @@ temp() {
   echo "Created temp dir $tempdir."
   pushd "$tempdir" > /dev/null || true
 
-  if command -v tput > /dev/null; then
+  if command -v tput >/dev/null; then
     # Switch to alternate screen and repeat previous output
     tput smcup
     echo "Created temp dir $tempdir."
@@ -17,7 +17,7 @@ temp() {
   popd > /dev/null || true
   rm -rf "$tempdir"
 
-  if command -v tput > /dev/null; then
+  if command -v tput >/dev/null; then
     # Switch to normal screen and repeat next output
     tput rmcup
   fi
