@@ -8,9 +8,9 @@ DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 
 # Prompt the user for confirmation
 confirm() {
-  local continue
-  read -r -p "$1 [y/N] " continue
-  case "$continue" in
+  local reply
+  read -r -p "$1 [y/N] " reply
+  case "$reply" in
     [yY][eE][sS]|[yY])
       true
       ;;
@@ -18,18 +18,6 @@ confirm() {
       false
       ;;
   esac
-}
-
-# Clone or pull a GitHub repo
-github() {
-  local dest
-  dest="${2:-'.'}/$(echo "$1" | cut -d '/' -f2)"
-  if [ -e "$dest" ]; then
-    echo "A repository at path $dest already exists, updating..."
-    git -C "$dest" pull || echo 'ERROR running command "git pull"'
-  else
-    git clone --depth 1 "https://github.com/$1.git" "$dest" || echo 'ERROR running command "git clone"'
-  fi
 }
 
 # Test if the current system is macOS

@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
+
 DOTFILES_DIR="${DOTFILES_DIR:-"$HOME/.dotfiles"}"
-DOTFILES_REPO="${DOTFILES_REPO:-'liamnewmarch/dotfiles'}"
+DOTFILES_REPO="${DOTFILES_REPO:-liamnewmarch/dotfiles}"
 
 check-git() {
-  command -v git
+  command -v git >/dev/null
 }
 
 dotfiles-installed() {
@@ -16,7 +18,7 @@ dotfiles-clone() {
 }
 
 dotfiles-update() {
-  git --git-dir="$DOTFILES_DIR/.git" pull --no-rebase
+  git -C "$DOTFILES_DIR" pull --no-rebase
 }
 
 run-installer() {
@@ -29,17 +31,8 @@ if ! check-git; then
 fi
 
 if dotfiles-installed; then
-  if ! dotfiles-update; then
-    echo 'Failed to update'
-    exit 1
-  fi
+  dotfiles-update
 else
-  if ! dotfiles-clone; then
-    echo 'Failed to clone'
-    exit 1
-  fi
-  if ! run-installer; then
-    echo 'Failed to install'
-    exit 1
-  fi
+  dotfiles-clone
+  run-installer
 fi
