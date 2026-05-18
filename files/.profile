@@ -55,6 +55,7 @@ for _file in \
   ncdu \
   npm \
   nvm \
+  ping \
   prompt \
   python \
   rust \
