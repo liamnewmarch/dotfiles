@@ -1,6 +1,5 @@
-# Return early if tree is not defined
-if ! command -v tree >/dev/null; then
-  return
+if command -v lsd >/dev/null; then
+  alias tree='lsd --tree -I node_modules'
+elif command -v tree >/dev/null; then
+  alias tree='tree -I node_modules'
 fi
-
-alias tree='tree -I node_modules'
