@@ -1,5 +1,6 @@
 temp() {
   # Create a temp directory
+  local tempdir
   tempdir=$(mktemp -d)
   echo "Created temp dir $tempdir."
   pushd "$tempdir" > /dev/null || true
