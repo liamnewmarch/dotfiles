@@ -43,5 +43,4 @@ npm() {
       command npm "$@"
       ;;
   esac
-  return $?
 }
