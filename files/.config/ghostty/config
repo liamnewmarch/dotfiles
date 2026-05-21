@@ -1,7 +1,11 @@
 theme = llama
 
+# Use Fira Code with ligatures disabled
 font-family = Fira Code Retina
 font-family = Fira Code
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
 font-size = 13
 
 macos-option-as-alt = right
