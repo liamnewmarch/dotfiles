@@ -34,12 +34,12 @@ link() {
 
 # Install bash
 if confirm 'Link .bash_profile, .bashrc, .inputrc and .profile?'; then
-  echo '[1/3] Link ~/.profile and ~/.profile.d'
+  echo '[1/3] Linking ~/.profile and ~/.profile.d'
   link .profile
   [ ! -d "$HOME/.profile.d" ] && link .profile.d
-  echo '[2/3] Link ~/.inputrc'
+  echo '[2/3] Linking ~/.inputrc'
   link .inputrc
-  echo '[3/3] Link ~/.bashrc and ~/.bash_profile'
+  echo '[3/3] Linking ~/.bashrc and ~/.bash_profile'
   link .bash_profile
   link .bashrc
   echo 'Done'
@@ -47,17 +47,24 @@ fi
 
 # Git
 if confirm 'Link .gitconfig and .gitignore?'; then
-  echo '[1/2] Linking gitconfig'
+  echo '[1/2] Linking ~/.gitconfig'
   link .gitconfig
-  echo '[2/2] Linking gitignore'
+  echo '[2/2] Linking ~/.gitignore'
   link .gitignore
+  echo 'Done'
+fi
+
+# Screen
+if confirm 'Link .screenrc?'; then
+  echo '[1/1] Linking .screenrc'
+  link .screenrc
   echo 'Done'
 fi
 
 
 # Ghostty
 if confirm 'Link .config/ghostty/ files?'; then
-  echo '[1/1] Linking config files'
+  echo '[1/1] Linking ~/.config/ghostty/ files'
   mkdir -p "$HOME/.config/ghostty/themes"
   link .config/ghostty/config .config/ghostty
   link .config/ghostty/themes/llama .config/ghostty/themes
