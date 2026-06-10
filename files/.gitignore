@@ -6,6 +6,8 @@
 .helix/
 .mypy_cache/
 .vscode/
+AGENTS.md
 CLAUDE.md
+TODO.md
 __pycache__/
 node_modules/
