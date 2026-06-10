@@ -8,4 +8,4 @@ motd() {
 }
 
 # Show message of the day
-[ -n "$IS_INTERACTIVE" ] && motd
+[ -n "$IS_INTERACTIVE" ] && [ -z "$DOTFILES_SKIP_MOTD" ] && motd
