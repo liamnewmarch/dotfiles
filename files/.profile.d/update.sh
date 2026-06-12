@@ -16,7 +16,7 @@ update() {
   if command -v brew >/dev/null; then
     printf '%s\n' "$(color blue 'Updating brew packages')"
     brew update
-    brew upgrade
+    brew upgrade --yes
     brew cleanup --prune=all
   fi
 
