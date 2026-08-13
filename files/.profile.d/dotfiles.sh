@@ -42,6 +42,9 @@ _dotfiles_doctor() {
     .bashrc \
     .gitconfig \
     .gitignore \
+    .screenrc \
+    .tmux.conf \
+    .tmux/themes/llama.conf \
     .config/ghostty/config \
     .config/ghostty/themes/llama \
     .config/helix/config.toml \
