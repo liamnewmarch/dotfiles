@@ -61,6 +61,15 @@ if confirm 'Link .screenrc?'; then
   echo 'Done'
 fi
 
+# Tmux
+if confirm 'Link .tmux.conf and theme?'; then
+  echo '[1/2] Linking .tmux.conf'
+  link .tmux.conf
+  echo '[2/2] Linking tmux theme'
+  mkdir -p "$HOME/.tmux/themes"
+  link .tmux/themes/llama.conf .tmux/themes
+  echo 'Done'
+fi
 
 # Ghostty
 if confirm 'Link .config/ghostty/ files?'; then

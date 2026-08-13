@@ -57,6 +57,17 @@ if confirm 'Remove .gitconfig and .gitignore symlinks?'; then
   unlink_managed .gitignore
 fi
 
+# Screen
+if confirm 'Remove .screenrc symlink?'; then
+  unlink_managed .screenrc
+fi
+
+# Tmux
+if confirm 'Remove .tmux.conf and theme symlinks?'; then
+  unlink_managed .tmux.conf
+  unlink_managed .tmux/themes/llama.conf
+fi
+
 # Ghostty
 if confirm 'Remove .config/ghostty/ symlinks?'; then
   unlink_managed .config/ghostty/config
