@@ -1,3 +1,7 @@
+[language-server.cspell-language-server]
+command = "cspell-lsp"
+args = ["--stdio"]
+
 [language-server.emmet-language-server]
 command = "emmet-language-server"
 args = ["--stdio"]
@@ -42,6 +46,7 @@ language-servers = [
   "superhtml",
   "emmet-language-server",
   # "tailwindcss-language-server",  # enable per-project
+  "cspell-language-server",
 ]
 
 [[language]]
@@ -49,6 +54,7 @@ name = "javascript"
 language-servers = [
   "typescript-language-server",
   "vscode-eslint-language-server",
+  "cspell-language-server",
 ]
 
 [[language]]
@@ -56,6 +62,7 @@ name = "jsx"
 language-servers = [
   "typescript-language-server",
   "vscode-eslint-language-server",
+  "cspell-language-server",
 ]
 
 [[language]]
@@ -66,6 +73,16 @@ language-servers = [
   "superhtml",
   "emmet-language-server",
   # "tailwindcss-language-server",  # enable per-project
+  "cspell-language-server",
+]
+
+[[language]]
+name = "markdown"
+scope = "*"
+language-servers = [
+  "marksman",
+  "markdown-oxide",
+  "cspell-language-server",
 ]
 
 [[language]]
@@ -73,6 +90,7 @@ name = "typescript"
 language-servers = [
   "typescript-language-server",
   "vscode-eslint-language-server",
+  "cspell-language-server",
 ]
 
 [[language]]
@@ -80,6 +98,7 @@ name = "tsx"
 language-servers = [
   "typescript-language-server",
   "vscode-eslint-language-server",
+  "cspell-language-server",
 ]
 
 [[language]]

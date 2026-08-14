@@ -62,6 +62,7 @@ for _file in \
   temp \
   top \
   tree \
+  tmux \
   update \
   platform \
   local \

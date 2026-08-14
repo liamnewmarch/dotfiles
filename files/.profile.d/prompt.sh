@@ -28,6 +28,9 @@ $DOTFILES_PROMPT_TERMINATOR "
 
 PS2="$DOTFILES_PROMPT_CONTINUATION "
 
+# Dynamic prompt (PROMPT_COMMAND) is bash-only; other shells keep the static prompt
+if [ -z "$BASH_VERSION" ]; then return; fi
+
 # Return early if the prompt isn’t interactive
 if [ ! "$IS_INTERACTIVE" ]; then return; fi
 

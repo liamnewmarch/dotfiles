@@ -1,9 +1,10 @@
 temp() {
   # Create a temp directory
-  local tempdir
+  local tempdir prevdir
   tempdir=$(mktemp -d)
+  prevdir=$(pwd)
   echo "Created temp dir $tempdir."
-  pushd "$tempdir" > /dev/null || true
+  cd "$tempdir" || return
 
   if command -v tput >/dev/null; then
     # Switch to alternate screen and repeat previous output
@@ -15,7 +16,7 @@ temp() {
   $SHELL
 
   # Remove the temp directory
-  popd > /dev/null || true
+  cd "$prevdir" || true
   rm -rf "$tempdir"
 
   if command -v tput >/dev/null; then

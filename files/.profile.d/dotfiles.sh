@@ -83,7 +83,7 @@ _dotfiles_doctor() {
   local cmd
   for cmd in bash git; do _dotfiles_doctor_tool "$cmd"; done
   printf '\n  configured: '
-  for cmd in hx ghostty; do _dotfiles_doctor_tool "$cmd"; done
+  for cmd in hx ghostty tmux screen; do _dotfiles_doctor_tool "$cmd"; done
   printf '\n  optional:   '
   for cmd in brew docker curl ncdu npm prettyping uv python htop tree; do
     _dotfiles_doctor_tool "$cmd"
