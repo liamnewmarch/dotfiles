@@ -3,4 +3,4 @@ if ! command -v ncdu >/dev/null; then
   return
 fi
 
-alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+alias ncdu='ncdu --color dark -rr --enable-delete -x --exclude .git --exclude node_modules'
