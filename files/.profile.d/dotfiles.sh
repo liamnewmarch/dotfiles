@@ -42,6 +42,7 @@ _dotfiles_doctor() {
     .bashrc \
     .gitconfig \
     .gitignore \
+    .npmrc \
     .screenrc \
     .tmux.conf \
     .tmux/themes/llama.conf \
@@ -85,7 +86,7 @@ _dotfiles_doctor() {
   printf '\n  configured: '
   for cmd in hx ghostty tmux screen; do _dotfiles_doctor_tool "$cmd"; done
   printf '\n  optional:   '
-  for cmd in brew docker curl ncdu npm prettyping uv python htop tree; do
+  for cmd in brew docker curl fnm ncdu node npm prettyping uv python htop tree; do
     _dotfiles_doctor_tool "$cmd"
   done
   printf '\n\n'

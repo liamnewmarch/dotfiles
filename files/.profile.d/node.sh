@@ -1,4 +1,13 @@
-# Return early if npm is not defined
+# Use fnm if it exists
+if command -v fnm >/dev/null; then
+  if [ -n "$BASH_VERSION" ]; then
+    eval "$(fnm env --shell bash --use-on-cd)"
+  else
+    eval "$(fnm env --shell bash)"
+  fi
+fi
+
+# Everything following relies on npm
 if ! command -v npm >/dev/null; then
   return
 fi

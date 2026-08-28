@@ -53,8 +53,7 @@ for _file in \
   ls \
   mkcd \
   ncdu \
-  npm \
-  nvm \
+  node \
   ping \
   prompt \
   python \

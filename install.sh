@@ -54,6 +54,13 @@ if confirm 'Link .gitconfig and .gitignore?'; then
   echo 'Done'
 fi
 
+# Node
+if confirm 'Link .npmrc?'; then
+  echo '[1/1] Linking ~/.npmrc'
+  link .npmrc
+  echo 'Done'
+fi
+
 # Screen
 if confirm 'Link .screenrc?'; then
   echo '[1/1] Linking .screenrc'

@@ -57,6 +57,11 @@ if confirm 'Remove .gitconfig and .gitignore symlinks?'; then
   unlink_managed .gitignore
 fi
 
+# Node
+if confirm 'Remove .npmrc symlink?'; then
+  unlink_managed .npmrc
+fi
+
 # Screen
 if confirm 'Remove .screenrc symlink?'; then
   unlink_managed .screenrc

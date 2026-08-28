@@ -14,6 +14,7 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 * Helix (editor)
 * Bash
 * Git
+* Node (fnm and npm)
 * Tmux
 * Screen
 
@@ -52,7 +53,7 @@ Abbreviated aliases are also provided for some commands:
 * Docker – see `dotfiles edit docker`.
 * Dotfiles – see `dotfiles edit dotfiles`.
 * Git – see `dotfiles edit git`.
-* npm – see `dotfiles edit npm`.
+* Node/npm – see `dotfiles edit node`.
 
 ### Functions
 
