@@ -1,15 +1,13 @@
-# This file loads the scripts found in the dotfiles repo's modules/ directory.
-# Scripts are written to be shell-agnostic. Bash specifc customisations can be
-# found in ~/.bashrc.
+# This file contains shell-agnostic settings and loads the scripts found in
+# the dotfiles repo's modules/ directory.
 #
-# To enable a script, add it to the list below. Scripts should be
-# added alphabetically except where necessary (e.g. the override
-# script `platform`) and should work independentally of one another
-# where possible (scripts depending on `color` being a notable
-# exception).
+# Bash-only settings that can't be inherited through the environment
+# (shopt, set -o, HIST*) live in ~/.bashrc instead. Bash settings that CAN be
+# inherited (env, aliases, functions, completions) are defined below and in
+# modules/, guarded by `[ -n "$BASH_VERSION" ]` where needed (e.g. prompt).
 
 # Reset PATH, allowing .profile to be sourced multiple times e.g. by `dotfiles reload`
-export DOTFILES_INITIAL_PATH="${DOTFILES_INITIAL_PATH:-"$PATH"}"
+export DOTFILES_INITIAL_PATH="${DOTFILES_INITIAL_PATH-"$PATH"}"
 export PATH="$DOTFILES_INITIAL_PATH"
 
 # Some platform variables that are used by the modules scripts
@@ -28,14 +26,14 @@ export PAGER="${PAGER:-less}"
 alias page='$PAGER'
 alias shell='$SHELL'
 
-try-source() {
+try_source() {
   # shellcheck source=/dev/null
   [ -r "$1" ] && . "$1"
 }
 
 case $- in
   *i*) IS_INTERACTIVE=1;;
-  *) ;;
+  *) IS_INTERACTIVE='';;
 esac
 
 # Resolve the repo from ~/.profile, which install.sh symlinks to <repo>/home/.profile.
@@ -45,11 +43,12 @@ DOTFILES_DIR="$(dirname "$(dirname "$(realpath "$HOME/.profile")")")"
 
 if [ ! -d "$DOTFILES_DIR/modules" ]; then
   echo 'dotfiles: cannot locate repo from ~/.profile; skipping profile modules' >&2
-  return 2>/dev/null || exit 1
+  return 2>/dev/null
 fi
 
-# Source modules scripts in the order specified
-for _file in \
+# Modules are enabled in alphabetical order (except for platform-specific
+# overrides, which come last).
+for _module in \
   bin \
   brew \
   color \
@@ -76,11 +75,12 @@ for _file in \
   update \
   platform \
 ; do
-  try-source "$DOTFILES_DIR/modules/$_file.sh"
+  try_source "$DOTFILES_DIR/modules/$_module.sh"
 done
-unset _file
+unset _module
 
 # Machine-specific overrides, loaded late so they can override anything set above
-try-source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/local.sh"
+try_source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/local.sh"
 
-try-source "$DOTFILES_DIR/modules/motd.sh"
+# Print the message of the day
+try_source "$DOTFILES_DIR/modules/motd.sh"

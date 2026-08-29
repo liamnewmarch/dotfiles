@@ -1,1 +1,1 @@
-try-source "$HOME/.cargo/env"
+try_source "$HOME/.cargo/env"

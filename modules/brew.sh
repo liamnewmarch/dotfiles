@@ -11,5 +11,5 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 if [ -n "$BASH_VERSION" ]; then
-  try-source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  try_source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 fi

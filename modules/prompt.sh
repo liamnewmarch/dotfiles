@@ -1,15 +1,19 @@
+# PS1/PS2 use bash prompt escapes (\W, \$, \t), so they're bash-only and must
+# never be exported: a non-bash child would inherit and print them literally.
+if [ -z "$BASH_VERSION" ]; then return; fi
+
 export DOTFILES_PROMPT_CONTINUATION='…'
 export DOTFILES_PROMPT_DIRECTORY='\W'
 export DOTFILES_PROMPT_TERMINATOR='\$'
 export DOTFILES_PROMPT_TIME='\t'
 
 # Simple monochrome prompt
-export PS1="
+PS1="
 $DOTFILES_PROMPT_TIME
 $DOTFILES_PROMPT_DIRECTORY
 $DOTFILES_PROMPT_TERMINATOR "
 
-export PS2="$DOTFILES_PROMPT_CONTINUATION "
+PS2="$DOTFILES_PROMPT_CONTINUATION "
 
 # Return early if the prompt doesn‘t support colour
 if [ ! "$IS_COLOR" ]; then return; fi
@@ -27,9 +31,6 @@ $DOTFILES_PROMPT_DIRECTORY
 $DOTFILES_PROMPT_TERMINATOR "
 
 PS2="$DOTFILES_PROMPT_CONTINUATION "
-
-# Dynamic prompt (PROMPT_COMMAND) is bash-only; other shells keep the static prompt
-if [ -z "$BASH_VERSION" ]; then return; fi
 
 # Return early if the prompt isn’t interactive
 if [ ! "$IS_INTERACTIVE" ]; then return; fi

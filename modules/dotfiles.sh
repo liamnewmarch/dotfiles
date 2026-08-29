@@ -121,8 +121,13 @@ dotfiles() {
       echo "$DOTFILES_DIR"
       ;;
     reload)
-      # shellcheck source=/dev/null
-      . "$HOME/.profile"
+      if [ -n "$BASH_VERSION" ]; then
+        # shellcheck source=/dev/null
+        . "$HOME/.bashrc"
+      else
+        # shellcheck source=/dev/null
+        . "$HOME/.profile"
+      fi
       ;;
     reset|restart)
       clear
