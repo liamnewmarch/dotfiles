@@ -43,9 +43,8 @@ unlink_managed() {
 }
 
 # Bash
-if confirm 'Remove .bash_profile, .bashrc, .inputrc, .profile and .profile.d symlinks?'; then
+if confirm 'Remove .bash_profile, .bashrc, .inputrc and .profile symlinks?'; then
   unlink_managed .profile
-  unlink_managed .profile.d
   unlink_managed .inputrc
   unlink_managed .bash_profile
   unlink_managed .bashrc

@@ -21,8 +21,8 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 ### The `dotfiles` command
 
 * `dotfiles edit` (alias `dfe`) – open the dotfiles repo in `$EDITOR`. Changes are sourced automatically.
-* `dotfiles edit [file]` (alias `dfe [file]`) – open a specific `~/.profile.d/[file].sh` in `$EDITOR`. Changes are sourced automatically.
-* `dotfiles edit local` (alias `dfl`) – open `~/.profile.d/local.sh` in `$EDITOR`. Changes are sourced automatically.
+* `dotfiles edit [file]` (alias `dfe [file]`) – open a specific `modules/[file].sh` in `$EDITOR`. Changes are sourced automatically.
+* `dotfiles edit local` (alias `dfl`) – open `~/.config/dotfiles/local.sh` in `$EDITOR`. Changes are sourced automatically.
 * `dotfiles reload` – re-source `~/.profile` in the current shell.
 * `dotfiles restart` (alias `dotfiles reset`) – start a fresh login shell, replacing the current one.
 * `dotfiles update` – pull the latest changes from git.
@@ -63,7 +63,7 @@ Abbreviated aliases are also provided for some commands:
 
 ### Local modifications
 
-Machine-specific settings and overrides can go in `~/.profile.d/local.sh`. Use `dfl` to edit this file in the default `$EDITOR` and immediately source it.
+Machine-specific settings and overrides can go in `~/.config/dotfiles/local.sh`. Use `dfl` to edit this file in the default `$EDITOR` and immediately source it.
 
 One recommended use for this file is to set a host nickname which is used by the `motd` function:
 

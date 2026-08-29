@@ -27,16 +27,38 @@ is_macos() {
 
 # Create a symlink in the user's home dir
 link() {
-  ln -fs "$DOTFILES_DIR/files/$1" "$HOME/$2"
+  ln -fs "$DOTFILES_DIR/home/$1" "$HOME/$2"
+}
+
+# Remove a symlink, but only if it points into this dotfiles repo (mirrors
+# unlink_managed() in uninstall.sh)
+unlink_stale() {
+  local path="$HOME/$1"
+  [ -L "$path" ] || return 0
+  case "$(readlink "$path")" in
+    "$DOTFILES_DIR"/*)
+      rm "$path"
+      echo "Removed stale ~/$1 symlink"
+      ;;
+  esac
 }
 
 ## INSTALLATION
 
 # Install bash
 if confirm 'Link .bash_profile, .bashrc, .inputrc and .profile?'; then
-  echo '[1/3] Linking ~/.profile and ~/.profile.d'
+  echo '[1/3] Linking ~/.profile'
+  # Moved out of the repo in favour of ~/.config/dotfiles/local.sh; migrate it
+  # if it's still where an older install.sh left it
+  _old_local="$DOTFILES_DIR/files/.profile.d/local.sh"
+  if [ -f "$_old_local" ]; then
+    mkdir -p "$HOME/.config/dotfiles"
+    mv "$_old_local" "$HOME/.config/dotfiles/local.sh"
+    echo 'Moved local.sh to ~/.config/dotfiles/local.sh'
+  fi
+  unset _old_local
   link .profile
-  [ ! -d "$HOME/.profile.d" ] && link .profile.d
+  unlink_stale .profile.d
   echo '[2/3] Linking ~/.inputrc'
   link .inputrc
   echo '[3/3] Linking ~/.bashrc and ~/.bash_profile'

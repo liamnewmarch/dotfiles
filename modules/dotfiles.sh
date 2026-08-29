@@ -1,7 +1,7 @@
 _dotfiles_doctor_link() {
   local rel="$1"
   local home_path="$HOME/$rel"
-  local expected="$2/files/$rel"
+  local expected="$2/home/$rel"
   if [ ! -L "$home_path" ] && [ ! -e "$home_path" ]; then
     printf '  %s ~/%s %s\n' "$(color grey '–')" "$rel" "$(color grey '(not linked)')"
     return
@@ -36,7 +36,6 @@ _dotfiles_doctor() {
   local rel
   for rel in \
     .profile \
-    .profile.d \
     .inputrc \
     .bash_profile \
     .bashrc \
@@ -104,8 +103,13 @@ dotfiles() {
       ;;
     edit)
       local path
-      if [ -n "$2" ]; then
-        path="$(dotfiles path)/files/.profile.d/$2.sh"
+      if [ "$2" = local ]; then
+        path="${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/local.sh"
+        mkdir -p "$(dirname "$path")"
+        # shellcheck source=/dev/null
+        $EDITOR "$path" && . "$path"
+      elif [ -n "$2" ]; then
+        path="$(dotfiles path)/modules/$2.sh"
         # shellcheck source=/dev/null
         $EDITOR "$path" && . "$path"
       else
@@ -114,7 +118,7 @@ dotfiles() {
       fi
       ;;
     path)
-      dirname "$(dirname "$(realpath "$HOME"/.profile)")"
+      echo "$DOTFILES_DIR"
       ;;
     reload)
       # shellcheck source=/dev/null
