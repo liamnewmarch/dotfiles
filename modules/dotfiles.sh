@@ -67,6 +67,7 @@ _dotfiles_doctor() {
     behind="$(printf '%s' "$counts" | cut -f1)"
     ahead="$(printf '%s' "$counts" | cut -f2)"
     if [ "$behind" -gt 0 ]; then
+      # shellcheck disable=2016
       printf '  %s %s commit(s) behind upstream (run `dotfiles update`)\n' "$(color red '✗')" "$behind"
       _dotfiles_doctor_failed=1
     elif [ "$ahead" -gt 0 ]; then
@@ -145,3 +146,4 @@ dotfiles() {
 
 alias dfe='dotfiles edit'
 alias dfl='dotfiles edit local'
+alias dfr='dotfiles reload'
