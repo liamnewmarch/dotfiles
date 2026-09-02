@@ -6,8 +6,8 @@ fi
 
 if command -v lsd >/dev/null; then
   alias ls='lsd'
-  alias ll='lsd -l --no-symlink'
-  alias l1='lsd -A1 --no-symlink'
+  alias l1='lsd -1 --no-symlink'
+  alias ll='lsd -l --git --no-symlink'
   alias la='lsd -Al --git'
 else
   if [ -n "$IS_MACOS" ]; then
