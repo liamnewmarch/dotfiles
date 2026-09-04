@@ -35,8 +35,14 @@ _npm_init_private_template='{
 '
 
 npm() {
+  local yn
   case "$1" in
     init )
+      if [ "$#" -gt 1 ]; then
+        # e.g. `npm init -y` or `npm init vite@latest` - let npm handle it
+        command npm "$@"
+        return
+      fi
       printf 'Use quick private package template? [Y/n] '
       read -r yn
       case "$yn" in
