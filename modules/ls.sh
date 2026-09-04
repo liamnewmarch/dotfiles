@@ -18,6 +18,7 @@ else
     alias ls='ls --color=auto'
   fi
 
+  alias l1='ls -1'
   alias ll='ls -A1'
   alias la='ls -AFhl'
 fi
