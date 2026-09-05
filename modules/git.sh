@@ -4,7 +4,19 @@ if ! command -v git >/dev/null; then
 fi
 
 _git_default_branch() {
-  git symbolic-ref refs/remotes/origin/HEAD | cut -d / -f 4-
+  local ref
+  # origin/HEAD is unset after e.g. a --depth 1 clone, so fall back through a
+  # few local-only checks rather than the network round trip of
+  # `git remote set-head origin --auto`
+  if ref="$(git symbolic-ref --quiet refs/remotes/origin/HEAD 2>/dev/null)"; then
+    printf '%s\n' "${ref#refs/remotes/origin/}"
+  elif git show-ref --verify --quiet refs/remotes/origin/main; then
+    printf 'main\n'
+  elif git show-ref --verify --quiet refs/remotes/origin/master; then
+    printf 'master\n'
+  else
+    git config --get init.defaultBranch || printf 'main\n'
+  fi
 }
 
 alias g='git'
