@@ -112,7 +112,7 @@ alias gswm='git switch "$(_git_default_branch)"'
 
 github() {
   gcl git@github.com:"$1.git"
-  cd "$(basename "$1")"
+  cd "$(basename "$1")" || return
 }
 
 # Bash completion for git aliases

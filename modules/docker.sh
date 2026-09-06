@@ -27,7 +27,7 @@ alias de='docker exec'
 alias dei='docker exec -it'
 alias dr='docker run --rm'
 alias dri='docker run --rm -it'
-alias drun='docker run -e USER="$(id -u)" -u="$(id -u)" -w /usr/src/app -v $(pwd):/usr/src/app --rm -it'
+alias drun='docker run -e USER="$(id -u)" -u="$(id -u)" -w /usr/src/app -v "$(pwd)":/usr/src/app --rm -it'
 
 dls() {
   printf '\n%s\n' "$(color blue 'Docker containers')"
