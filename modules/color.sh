@@ -1,5 +1,11 @@
 color() {
-  local n
+  # \001/\002 mark a region as non-printing so bash's line editor doesn't
+  # miscount the terminal width - but they're only meaningful inside PS1.
+  # Everywhere else (motd, dotfiles doctor, echoed output, ...) they're stray
+  # control bytes, so only emit them when the caller is building a prompt
+  # (modules/prompt.sh sets DOTFILES_COLOR_PROMPT around those calls).
+  local n fmt='%s'
+  [ -n "$DOTFILES_COLOR_PROMPT" ] && fmt='\001%s\002'
   [ -n "$IS_COLOR" ] && case $1 in
     black  ) n=0 ;;
     red    ) n=1 ;;
@@ -12,8 +18,10 @@ color() {
     grey   ) n=8 ;;
     *      ) n=$1;;
   esac
-  [ -n "$n" ] && printf '\x01%s\x02' "$(tput setaf "$n")"
+  # shellcheck disable=SC2059
+  [ -n "$n" ] && printf "$fmt" "$(tput setaf "$n")"
   shift
   printf %s "$@"
-  [ -n "$n" ] && printf '\x01%s\x02' "$(tput sgr0)"
+  # shellcheck disable=SC2059
+  [ -n "$n" ] && printf "$fmt" "$(tput sgr0)"
 }

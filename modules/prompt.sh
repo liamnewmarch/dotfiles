@@ -18,11 +18,15 @@ PS2="$DOTFILES_PROMPT_CONTINUATION "
 # Return early if the prompt doesn‘t support colour
 if [ ! "$IS_COLOR" ]; then return; fi
 
-# Colourise simple values
+# Colourise simple values. DOTFILES_COLOR_PROMPT tells color() (see
+# modules/color.sh) these are going into PS1, so it should mark them
+# non-printing.
+DOTFILES_COLOR_PROMPT=1
 DOTFILES_PROMPT_CONTINUATION=$(color grey "$DOTFILES_PROMPT_CONTINUATION")
 DOTFILES_PROMPT_DIRECTORY=$(color blue "$DOTFILES_PROMPT_DIRECTORY")
 DOTFILES_PROMPT_TERMINATOR=$(color blue "$DOTFILES_PROMPT_TERMINATOR")
 DOTFILES_PROMPT_TIME=$(color grey "$DOTFILES_PROMPT_TIME")
+unset DOTFILES_COLOR_PROMPT
 
 # Simple coloured prompt
 PS1="
@@ -57,6 +61,11 @@ $DOTFILES_PROMPT_TERMINATOR "
 _dotfiles_prompt_command() {
   # Capture $? before anything below (even `local`) has a chance to overwrite it
   local exit_status=$?
+  # See modules/color.sh - marks the color() calls below as being for PS1.
+  # local's dynamic scope covers the command substitutions, so this doesn't
+  # need to be unset.
+  # shellcheck disable=SC2034 # read by color() in the functions called below
+  local DOTFILES_COLOR_PROMPT=1
   DOTFILES_PROMPT_ERROR=$(_dotfiles_update_prompt_error "$exit_status")
   DOTFILES_PROMPT_GIT=$(_dotfiles_update_prompt_git)
   DOTFILES_PROMPT_SSH=$(_dotfiles_update_prompt_ssh)
