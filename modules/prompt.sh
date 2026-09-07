@@ -55,7 +55,9 @@ $DOTFILES_PROMPT_TERMINATOR "
 
 # This command runs before the PS1 is printed to update dynamic values
 _dotfiles_prompt_command() {
-  DOTFILES_PROMPT_ERROR=$(_dotfiles_update_prompt_error $?)
+  # Capture $? before anything below (even `local`) has a chance to overwrite it
+  local exit_status=$?
+  DOTFILES_PROMPT_ERROR=$(_dotfiles_update_prompt_error "$exit_status")
   DOTFILES_PROMPT_GIT=$(_dotfiles_update_prompt_git)
   DOTFILES_PROMPT_SSH=$(_dotfiles_update_prompt_ssh)
   DOTFILES_PROMPT_VIRTUAL_ENV=$(_dotfiles_update_prompt_virtual_env)
