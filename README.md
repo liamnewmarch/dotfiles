@@ -58,6 +58,7 @@ Abbreviated aliases are also provided for some commands:
 ### Functions
 
 * `color` – print a string in the specified color, e.g. `echo "$(color blue 'This text is blue')"`.
+* `hyperlink` – print a clickable terminal hyperlink, e.g. `hyperlink 'https://example.com' 'Example'`.
 * `motd` – prints a Message Of The Day string for new shells. Note: this is similar but unrelated to `/etc/motd`.
 * `update` (alias `up`) – updates the local dotfiles repo, then updates system packages through Homebrew or APT.
 

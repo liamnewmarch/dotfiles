@@ -25,3 +25,9 @@ color() {
   # shellcheck disable=SC2059
   [ -n "$n" ] && printf "$fmt" "$(tput sgr0)"
 }
+
+# Print a clickable terminal hyperlink: hyperlink <url> <text>
+hyperlink() {
+  # shellcheck disable=SC1003 # \e\\ below is a literal backslash escape, not an unterminated quote
+  printf '\e]8;;%s\e\\%s\e]8;;\e\\' "$@"
+}
