@@ -39,6 +39,7 @@ The `install.sh` script creates symlinks in your `$HOME` directory, which could 
 ### Aliases
 
 * `edit` – edit files in the default `$EDITOR`.
+* `browse` – open a URL in the default `$BROWSER` (`open` on macOS, `xdg-open` on Linux, if installed).
 * `ghosttyedit` (alias `ge`) – edit `~/.config/ghostty/` in the default `$EDITOR`.
 * `helixedit` (alias `he`) – edit `~/.config/helix/` in the default `$EDITOR`.
 * `mkcd` – create a directory and immediately `cd` into it. Supports nested directories, too.
