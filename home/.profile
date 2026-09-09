@@ -69,9 +69,9 @@ for _module in \
   python \
   rust \
   temp \
+  tmux \
   top \
   tree \
-  tmux \
   update \
   platform \
 ; do
