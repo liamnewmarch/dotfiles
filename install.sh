@@ -4,6 +4,9 @@ set -e
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 
+# shellcheck source=lib/links.sh
+. "$DOTFILES_DIR/lib/links.sh"
+
 # HELPER FUNCTIONS
 
 # Prompt the user for confirmation
@@ -27,7 +30,9 @@ is_macos() {
 
 # Create a symlink in the user's home dir
 link() {
-  ln -fs "$DOTFILES_DIR/home/$1" "$HOME/$2"
+  local src="$DOTFILES_DIR/home/$1" dest="$HOME/$1"
+  mkdir -p "$(dirname "$dest")"
+  ln -fs "$src" "$dest"
 }
 
 # Remove a symlink, but only if it points into this dotfiles repo (mirrors
@@ -45,77 +50,28 @@ unlink_stale() {
 
 ## INSTALLATION
 
-# Install bash
-if confirm 'Link .bash_profile, .bashrc, .inputrc and .profile?'; then
-  echo '[1/3] Linking ~/.profile'
-  # Moved out of the repo in favour of ~/.config/dotfiles/local.sh; migrate it
-  # if it's still where an older install.sh left it
-  _old_local="$DOTFILES_DIR/files/.profile.d/local.sh"
-  if [ -f "$_old_local" ]; then
-    mkdir -p "$HOME/.config/dotfiles"
-    mv "$_old_local" "$HOME/.config/dotfiles/local.sh"
-    echo 'Moved local.sh to ~/.config/dotfiles/local.sh'
+for _group in $DOTFILES_LINK_GROUPS; do
+  if confirm "Link $(dotfiles_link_label "$_group")?"; then
+    for _path in $(dotfiles_link_paths "$_group"); do
+      echo "Linking ~/$_path"
+      link "$_path"
+    done
+    if [ "$_group" = bash ]; then
+      # Moved out of the repo in favour of ~/.config/dotfiles/local.sh; migrate it
+      # if it's still where an older install.sh left it
+      _old_local="$DOTFILES_DIR/files/.profile.d/local.sh"
+      if [ -f "$_old_local" ]; then
+        mkdir -p "$HOME/.config/dotfiles"
+        mv "$_old_local" "$HOME/.config/dotfiles/local.sh"
+        echo 'Moved local.sh to ~/.config/dotfiles/local.sh'
+      fi
+      unset _old_local
+      unlink_stale .profile.d
+    fi
+    echo 'Done'
   fi
-  unset _old_local
-  link .profile
-  unlink_stale .profile.d
-  echo '[2/3] Linking ~/.inputrc'
-  link .inputrc
-  echo '[3/3] Linking ~/.bashrc and ~/.bash_profile'
-  link .bash_profile
-  link .bashrc
-  echo 'Done'
-fi
-
-# Git
-if confirm 'Link .gitconfig and .gitignore?'; then
-  echo '[1/2] Linking ~/.gitconfig'
-  link .gitconfig
-  echo '[2/2] Linking ~/.gitignore'
-  link .gitignore
-  echo 'Done'
-fi
-
-# Node
-if confirm 'Link .npmrc?'; then
-  echo '[1/1] Linking ~/.npmrc'
-  link .npmrc
-  echo 'Done'
-fi
-
-# Screen
-if confirm 'Link .screenrc?'; then
-  echo '[1/1] Linking .screenrc'
-  link .screenrc
-  echo 'Done'
-fi
-
-# Tmux
-if confirm 'Link .tmux.conf and theme?'; then
-  echo '[1/2] Linking .tmux.conf'
-  link .tmux.conf
-  echo '[2/2] Linking tmux theme'
-  mkdir -p "$HOME/.tmux/themes"
-  link .tmux/themes/llama.conf .tmux/themes
-  echo 'Done'
-fi
-
-# Ghostty
-if confirm 'Link .config/ghostty/ files?'; then
-  echo '[1/1] Linking ~/.config/ghostty/ files'
-  mkdir -p "$HOME/.config/ghostty/themes"
-  link .config/ghostty/config .config/ghostty
-  link .config/ghostty/themes/llama .config/ghostty/themes
-fi
-
-# Helix
-if confirm 'Link .config/helix/ config files?'; then
-  echo '[1/1] Linking config files'
-  mkdir -p "$HOME/.config/helix/themes"
-  link .config/helix/config.toml .config/helix
-  link .config/helix/languages.toml .config/helix
-  link .config/helix/themes/llama.toml .config/helix/themes
-fi
+done
+unset _group _path
 
 # Command-line Tools for Xcode
 if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then

@@ -8,6 +8,9 @@ set -e
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 
+# shellcheck source=lib/links.sh
+. "$DOTFILES_DIR/lib/links.sh"
+
 # Prompt the user for confirmation
 confirm() {
   local reply
@@ -42,45 +45,11 @@ unlink_managed() {
   esac
 }
 
-# Bash
-if confirm 'Remove .bash_profile, .bashrc, .inputrc and .profile symlinks?'; then
-  unlink_managed .profile
-  unlink_managed .inputrc
-  unlink_managed .bash_profile
-  unlink_managed .bashrc
-fi
-
-# Git
-if confirm 'Remove .gitconfig and .gitignore symlinks?'; then
-  unlink_managed .gitconfig
-  unlink_managed .gitignore
-fi
-
-# Node
-if confirm 'Remove .npmrc symlink?'; then
-  unlink_managed .npmrc
-fi
-
-# Screen
-if confirm 'Remove .screenrc symlink?'; then
-  unlink_managed .screenrc
-fi
-
-# Tmux
-if confirm 'Remove .tmux.conf and theme symlinks?'; then
-  unlink_managed .tmux.conf
-  unlink_managed .tmux/themes/llama.conf
-fi
-
-# Ghostty
-if confirm 'Remove .config/ghostty/ symlinks?'; then
-  unlink_managed .config/ghostty/config
-  unlink_managed .config/ghostty/themes/llama
-fi
-
-# Helix
-if confirm 'Remove .config/helix/ symlinks?'; then
-  unlink_managed .config/helix/config.toml
-  unlink_managed .config/helix/languages.toml
-  unlink_managed .config/helix/themes/llama.toml
-fi
+for _group in $DOTFILES_LINK_GROUPS; do
+  if confirm "Remove $(dotfiles_link_label "$_group") symlinks?"; then
+    for _path in $(dotfiles_link_paths "$_group"); do
+      unlink_managed "$_path"
+    done
+  fi
+done
+unset _group _path

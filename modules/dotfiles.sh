@@ -32,26 +32,17 @@ _dotfiles_doctor() {
   local _dotfiles_doctor_failed=0
   local path; path="$(dotfiles path)"
 
+  if ! try_source "$path/lib/links.sh"; then
+    printf '\n%s\n' "$(color red '✗') lib/links.sh not found at $path/lib/links.sh"
+    return 1
+  fi
+
   printf '\n%s\n' "$(color blue 'Symlinks')"
-  local rel
-  for rel in \
-    .profile \
-    .inputrc \
-    .bash_profile \
-    .bashrc \
-    .gitconfig \
-    .gitignore \
-    .npmrc \
-    .screenrc \
-    .tmux.conf \
-    .tmux/themes/llama.conf \
-    .config/ghostty/config \
-    .config/ghostty/themes/llama \
-    .config/helix/config.toml \
-    .config/helix/languages.toml \
-    .config/helix/themes/llama.toml \
-  ; do
-    _dotfiles_doctor_link "$rel" "$path"
+  local link_group rel
+  for link_group in $DOTFILES_LINK_GROUPS; do
+    for rel in $(dotfiles_link_paths "$link_group"); do
+      _dotfiles_doctor_link "$rel" "$path"
+    done
   done
 
   printf '\n%s\n' "$(color blue 'Repo')"
