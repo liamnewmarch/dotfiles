@@ -4,7 +4,7 @@ This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_h
 
 I use bash on macOS and Debian. These are the only supported platform/shell combinations. On macOS, the installer can also optionally install Command-line Tools for Xcode and Homebrew if they're not already present.
 
-The `install.sh` script creates symlinks in your `$HOME` directory, which could overwrite existing files. __Make sure to back up your files first__ and consider testing in a fresh user directory.
+The `install.sh` script creates symlinks in your `$HOME` directory. If a file already exists where a symlink would go, it's backed up first (as `<file>.bak.<timestamp>`) rather than overwritten.
 
 ## What’s included
 

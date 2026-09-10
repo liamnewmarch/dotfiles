@@ -28,10 +28,19 @@ is_macos() {
   [ "$(uname -s)" = 'Darwin' ]
 }
 
-# Create a symlink in the user's home dir
+# Create a symlink in the user's home dir, backing up anything already there
+# that isn't already this exact symlink (a real file, a foreign symlink, or a
+# broken one)
 link() {
-  local src="$DOTFILES_DIR/home/$1" dest="$HOME/$1"
+  local src="$DOTFILES_DIR/home/$1" dest="$HOME/$1" backup
   mkdir -p "$(dirname "$dest")"
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    if ! { [ -L "$dest" ] && [ "$(readlink "$dest")" = "$src" ]; }; then
+      backup="$dest.bak.$(date +%Y%m%d%H%M%S)"
+      mv "$dest" "$backup"
+      echo "  Backed up existing ~/$1 to $(basename "$backup")"
+    fi
+  fi
   ln -fs "$src" "$dest"
 }
 
