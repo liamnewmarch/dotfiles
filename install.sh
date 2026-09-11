@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
 
+# Usage: install.sh [-y|--yes]
+#
+# -y/--yes (or DOTFILES_ASSUME_YES=1) skips the confirmation prompts for
+# linking dotfiles, so the installer can run non-interactively (e.g. piped
+# in via docs/index.html, where stdin isn't a terminal). It deliberately does
+# NOT extend to the Xcode/Homebrew installs or the macOS `defaults` writes
+# below - those are always skipped unless a real interactive confirmation is
+# given.
+
 set -e
 
 DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
+
+for _arg in "$@"; do
+  case "$_arg" in
+    -y|--yes) DOTFILES_ASSUME_YES=1 ;;
+    *)
+      echo "Usage: $0 [-y|--yes]" >&2
+      exit 1
+      ;;
+  esac
+done
+unset _arg
 
 # shellcheck source=lib/links.sh
 . "$DOTFILES_DIR/lib/links.sh"
@@ -12,7 +32,7 @@ DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 # Prompt the user for confirmation
 confirm() {
   local reply
-  read -r -p "$1 [y/N] " reply
+  read -r -p "$1 [y/N] " reply || return 1
   case "$reply" in
     [yY][eE][sS]|[yY])
       true
@@ -60,7 +80,7 @@ unlink_stale() {
 ## INSTALLATION
 
 for _group in $DOTFILES_LINK_GROUPS; do
-  if confirm "Link $(dotfiles_link_label "$_group")?"; then
+  if [ -n "$DOTFILES_ASSUME_YES" ] || confirm "Link $(dotfiles_link_label "$_group")?"; then
     for _path in $(dotfiles_link_paths "$_group"); do
       echo "Linking ~/$_path"
       link "$_path"
@@ -82,20 +102,22 @@ for _group in $DOTFILES_LINK_GROUPS; do
 done
 unset _group _path
 
-# Command-line Tools for Xcode
-if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then
-  xcode-select --install
-fi
+if [ -z "$DOTFILES_ASSUME_YES" ]; then
+  # Command-line Tools for Xcode
+  if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then
+    xcode-select --install
+  fi
 
-# Homebrew
-if is_macos && ! command -v brew >/dev/null && confirm 'Install Homebrew?'; then
-  echo '[1/1] Installing Homebrew'
-  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo 'Done'
+  # Homebrew
+  if is_macos && ! command -v brew >/dev/null && confirm 'Install Homebrew?'; then
+    echo '[1/1] Installing Homebrew'
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'Done'
+  fi
 fi
 
 # macOS defaults
-if is_macos && confirm 'Write custom macOS defaults?'; then
+if [ -z "$DOTFILES_ASSUME_YES" ] && is_macos && confirm 'Write custom macOS defaults?'; then
   if confirm '[1/14] Expand save and print dialogs?'; then
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
