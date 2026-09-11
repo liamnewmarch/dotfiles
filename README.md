@@ -82,6 +82,12 @@ git clone https://github.com/liamnewmarch/dotfiles.git ~/.dotfiles
 ~/.dotfiles/install.sh
 ```
 
+Or, to clone (or update an existing clone) and install in one step:
+
+```sh
+curl -fsSL https://liamnewmarch.github.io/dotfiles/ | bash
+```
+
 ## Uninstallation
 
 To remove the symlinks `install.sh` created, run `~/.dotfiles/uninstall.sh`. It only removes symlinks that point into the dotfiles repo, and does not revert macOS defaults or uninstall Homebrew.

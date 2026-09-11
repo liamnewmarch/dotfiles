@@ -22,7 +22,20 @@ dotfiles-update() {
 }
 
 run-installer() {
-  "$DOTFILES_DIR/install.sh"
+  # When this script is itself piped in (curl | bash), stdin is the pipe and
+  # is already at EOF by the time install.sh's confirm() prompts would read
+  # it - every prompt would silently answer no. Reattach the real terminal
+  # when there is one; otherwise fall back to non-interactive.
+  #
+  # `[ -r /dev/tty ]` only checks the device node's permission bits, not
+  # whether a controlling terminal actually exists - opening it still fails
+  # with ENXIO when there is none (e.g. no tty at all), so actually try the
+  # open in a subshell first.
+  if (exec 0< /dev/tty) 2>/dev/null; then
+    "$DOTFILES_DIR/install.sh" < /dev/tty
+  else
+    "$DOTFILES_DIR/install.sh" --yes
+  fi
 }
 
 if ! check-git; then
