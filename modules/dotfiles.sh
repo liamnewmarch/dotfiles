@@ -45,6 +45,22 @@ _dotfiles_doctor() {
     done
   done
 
+  printf '\n%s\n' "$(color blue 'Modules')"
+  local mod_file mod_name _dotfiles_doctor_unregistered=0
+  for mod_file in "$path"/modules/*.sh; do
+    mod_name="$(basename "$mod_file" .sh)"
+    case "$mod_name" in
+      motd|darwin|linux) continue ;;
+    esac
+    case " $DOTFILES_MODULES " in
+      *" $mod_name "*) continue ;;
+    esac
+    printf '  %s %s %s\n' "$(color red '✗')" "$mod_name" "$(color grey '(not in home/.profile)')"
+    _dotfiles_doctor_unregistered=1
+    _dotfiles_doctor_failed=1
+  done
+  [ "$_dotfiles_doctor_unregistered" -eq 0 ] && printf '  %s All modules registered\n' "$(color green '✓')"
+
   printf '\n%s\n' "$(color blue 'Repo')"
   if [ -z "$(git -C "$path" status --porcelain)" ]; then
     printf '  %s Working tree clean\n' "$(color green '✓')"

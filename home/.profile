@@ -46,6 +46,14 @@ if [ ! -d "$DOTFILES_DIR/modules" ]; then
   return 2>/dev/null
 fi
 
+# Names of every module sourced by the loop below, space-separated. Not
+# exported (this is a plain shell variable, not a subprocess-visible one) -
+# `dotfiles doctor` reads it to flag a modules/*.sh file nobody registered
+# here. darwin/linux and motd are loaded separately (via platform.sh and
+# below respectively) so doctor knows to exempt them instead of expecting
+# them here too.
+DOTFILES_MODULES=''
+
 # Modules are enabled in alphabetical order (except for platform-specific
 # overrides, which come last).
 for _module in \
@@ -76,6 +84,7 @@ for _module in \
   platform \
 ; do
   try_source "$DOTFILES_DIR/modules/$_module.sh"
+  DOTFILES_MODULES="$DOTFILES_MODULES $_module"
 done
 unset _module
 

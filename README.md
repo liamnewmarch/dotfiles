@@ -27,7 +27,7 @@ The `install.sh` script creates symlinks in your `$HOME` directory. If a file al
 * `dotfiles restart` (alias `dotfiles reset`) – start a fresh login shell, replacing the current one.
 * `dotfiles update` – pull the latest changes from git.
 * `dotfiles path` – print the path to the dotfiles repo.
-* `dotfiles doctor` – verify symlinks, repo state, and expected tools. Exits non-zero if anything looks wrong.
+* `dotfiles doctor` – verify symlinks, that every module is registered, repo state, and expected tools. Exits non-zero if anything looks wrong.
 
 ### Env vars
 
