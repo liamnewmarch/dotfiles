@@ -23,7 +23,7 @@ The `install.sh` script creates symlinks in your `$HOME` directory. If a file al
 * `dotfiles edit` (alias `dfe`) – open the dotfiles repo in `$EDITOR`. Changes are sourced automatically.
 * `dotfiles edit [file]` (alias `dfe [file]`) – open a specific `modules/[file].sh` in `$EDITOR`. Changes are sourced automatically.
 * `dotfiles edit local` (alias `dfl`) – open `~/.config/dotfiles/local.sh` in `$EDITOR`. Changes are sourced automatically.
-* `dotfiles reload` – re-source `~/.profile` in the current shell.
+* `dotfiles reload` (alias `dfr`) – re-source `~/.bashrc` (or `~/.profile` outside bash) in the current shell.
 * `dotfiles restart` (alias `dotfiles reset`) – start a fresh login shell, replacing the current one.
 * `dotfiles update` – pull the latest changes from git.
 * `dotfiles path` – print the path to the dotfiles repo.
