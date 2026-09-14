@@ -60,6 +60,7 @@ for _module in \
   bin \
   brew \
   color \
+  container \
   docker \
   dotfiles \
   editor \

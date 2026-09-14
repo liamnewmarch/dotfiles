@@ -1,17 +1,25 @@
 # Add Docker to the PATH if it was installed for the user
-export DOCKER_PATH="${DOCKER_PATH:-"$HOME/.docker/bin"}"
+DOCKER_PATH="${DOCKER_PATH:-"$HOME/.docker/bin"}"
 if [ -d "$DOCKER_PATH" ]; then
+  export DOCKER_PATH
   export PATH="$DOCKER_PATH:$PATH"
 else
   unset DOCKER_PATH
 fi
 
-# Return early if docker is not defined
-if ! command -v docker >/dev/null; then
+# Return early if neither Docker nor Podman is installed
+if ! command -v docker >/dev/null && ! command -v podman >/dev/null; then
   return
 fi
 
-alias db='docker build --rm'
+if ! command -v docker >/dev/null; then
+  # If Docker isn’t installed, Podman must be. Use a simple alias so the
+  # following shortcuts apply to Podman instead.
+  alias docker='podman'
+  docker() { command podman "$@"; }
+fi
+
+alias db='docker build'
 alias dcb='docker compose build'
 alias dcd='docker compose down'
 alias dce='docker compose exec'
@@ -27,7 +35,7 @@ alias de='docker exec'
 alias dei='docker exec -it'
 alias dr='docker run --rm'
 alias dri='docker run --rm -it'
-alias drun='docker run -e USER="$(id -u)" -u="$(id -u)" -w /usr/src/app -v "$(pwd)":/usr/src/app --rm -it'
+alias drun='docker run -e USER="$(id -u)" -u "$(id -u)" -w /usr/src/app -v "$(pwd)":/usr/src/app --rm -it'
 
 dls() {
   printf '\n%s\n' "$(color blue 'Docker containers')"

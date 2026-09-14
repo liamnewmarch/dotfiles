@@ -93,7 +93,7 @@ _dotfiles_doctor() {
   printf '\n  configured: '
   for cmd in hx ghostty tmux screen; do _dotfiles_doctor_tool "$cmd"; done
   printf '\n  optional:   '
-  for cmd in brew docker curl fnm ncdu node npm prettyping uv python htop tree; do
+  for cmd in brew container curl docker fnm htop ncdu node npm podman prettyping python tree uv; do
     _dotfiles_doctor_tool "$cmd"
   done
   printf '\n\n'
