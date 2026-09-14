@@ -4,19 +4,18 @@ This repo contains my [dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_h
 
 I use bash on macOS and Debian. These are the only supported platform/shell combinations. On macOS, the installer can also optionally install Command-line Tools for Xcode and Homebrew if they're not already present.
 
-The `install.sh` script creates symlinks in your `$HOME` directory. If a file already exists where a symlink would go, it's backed up first (as `<file>.bak.<timestamp>`) rather than overwritten. Pass `-y`/`--yes` (or set `DOTFILES_ASSUME_YES=1`) to skip the confirmation prompts and link everything non-interactively; this doesn't extend to the Xcode/Homebrew installs or the macOS `defaults` writes below, which always require an interactive confirmation.
-
 ## What’s included
 
 ### Config files and themes
 
 * Ghostty (terminal emulator)
 * Helix (editor)
+* Tmux
 * Bash
 * Git
-* Node (fnm and npm)
-* Tmux
-* Screen
+* Homebrew
+* Node (managed by fnm)
+* Python (managed by uv)
 
 ### The `dotfiles` command
 
@@ -87,6 +86,7 @@ Or, to clone (or update an existing clone) and install in one step:
 ```sh
 curl -fsSL https://liamnewmarch.github.io/dotfiles/ | bash
 ```
+The `install.sh` script creates symlinks in your `$HOME` directory. If a file already exists where a symlink would go, it's backed up first (as `<file>.bak.<timestamp>`) rather than overwritten. Pass `-y`/`--yes` (or set `DOTFILES_ASSUME_YES=1`) to skip the confirmation prompts and link everything non-interactively; this doesn't extend to the Command-line Tools for Xcode, Homebrew, Homebrew packages, or macOS defaults – all of which require interactive confirmation.
 
 ## Uninstallation
 

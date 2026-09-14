@@ -7,12 +7,13 @@
 # word-split deliberately by every caller.
 
 # shellcheck disable=SC2034 # used by every file that sources this one
-DOTFILES_LINK_GROUPS='bash git node screen tmux ghostty helix'
+DOTFILES_LINK_GROUPS='bash brew git node screen tmux ghostty helix'
 
 # Human-readable description of a group, used in install/uninstall prompts
 dotfiles_link_label() {
   case "$1" in
     bash)    echo '.bash_profile, .bashrc, .inputrc and .profile' ;;
+    brew)    echo '.Brewfile' ;;
     git)     echo '.gitconfig and .gitignore' ;;
     node)    echo '.npmrc' ;;
     screen)  echo '.screenrc' ;;
@@ -26,6 +27,7 @@ dotfiles_link_label() {
 dotfiles_link_paths() {
   case "$1" in
     bash)    echo '.profile .inputrc .bash_profile .bashrc' ;;
+    brew)    echo '.Brewfile' ;;
     git)     echo '.gitconfig .gitignore' ;;
     node)    echo '.npmrc' ;;
     screen)  echo '.screenrc' ;;

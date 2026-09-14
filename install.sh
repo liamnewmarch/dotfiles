@@ -112,6 +112,28 @@ if [ -z "$DOTFILES_ASSUME_YES" ]; then
   if is_macos && ! command -v brew >/dev/null && confirm 'Install Homebrew?'; then
     echo '[1/1] Installing Homebrew'
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if [ -x /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
+    echo 'Done'
+  fi
+
+  # Homebrew bundle
+  if command -v brew >/dev/null && [ -e "$HOME/.Brewfile" ] &&
+     confirm 'Install packages from ~/.Brewfile?'; then
+    echo '[1/2] Running brew bundle install --global'
+    brew bundle install --global ||
+      echo "  Some packages failed; re-run 'brew bundle install --global'"
+    # Not in the Brewfile: `npm` entries there can't pin a version, and
+    # TypeScript 7.x breaks the Helix LSP setup
+    echo '[2/2] Installing typescript@6'
+    if command -v npm >/dev/null; then
+      npm install --global typescript@6 || echo '  typescript@6 install failed'
+    else
+      echo '  Skipped: npm not found'
+    fi
     echo 'Done'
   fi
 fi
