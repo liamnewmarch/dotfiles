@@ -69,6 +69,7 @@ for _module in \
   grep \
   ip \
   less \
+  locale \
   ls \
   mkcd \
   ncdu \
