@@ -19,7 +19,6 @@ IS_MACOS="$([ "$PLATFORM" = "darwin" ] && echo 1)"
 IS_LINUX="$([ "$PLATFORM" = "linux" ] && echo 1)"
 
 # Defaults
-export MAKE="${MAKE:-make}"
 export PAGER="${PAGER:-less}"
 
 # Generic commands (see also modules/editor.sh)
