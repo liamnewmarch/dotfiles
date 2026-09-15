@@ -13,9 +13,8 @@ if ! command -v docker >/dev/null && ! command -v podman >/dev/null; then
 fi
 
 if ! command -v docker >/dev/null; then
-  # If Docker isn’t installed, Podman must be. Use a simple alias so the
+  # If Docker isn’t installed, Podman must be. Define a function so the
   # following shortcuts apply to Podman instead.
-  alias docker='podman'
   docker() { command podman "$@"; }
 fi
 
