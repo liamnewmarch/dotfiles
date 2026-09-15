@@ -14,20 +14,8 @@ DOTFILES_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" || exit; pwd -P)"}"
 
 # shellcheck source=lib/links.sh
 . "$DOTFILES_DIR/lib/links.sh"
-
-# Prompt the user for confirmation
-confirm() {
-  local reply
-  read -r -p "$1 [y/N] " reply || return 1
-  case "$reply" in
-    [yY][eE][sS]|[yY])
-      true
-      ;;
-    *)
-      false
-      ;;
-  esac
-}
+# shellcheck source=lib/confirm.sh
+. "$DOTFILES_DIR/lib/confirm.sh"
 
 # Remove a symlink, but only if it points into this dotfiles repo
 unlink_managed() {

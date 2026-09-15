@@ -26,22 +26,10 @@ unset _arg
 
 # shellcheck source=lib/links.sh
 . "$DOTFILES_DIR/lib/links.sh"
+# shellcheck source=lib/confirm.sh
+. "$DOTFILES_DIR/lib/confirm.sh"
 
 # HELPER FUNCTIONS
-
-# Prompt the user for confirmation
-confirm() {
-  local reply
-  read -r -p "$1 [y/N] " reply || return 1
-  case "$reply" in
-    [yY][eE][sS]|[yY])
-      true
-      ;;
-    *)
-      false
-      ;;
-  esac
-}
 
 # Test if the current system is macOS
 is_macos() {
