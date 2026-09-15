@@ -1,5 +1,4 @@
 temp() {
-  # Create a temp directory
   local tempdir prevdir
   tempdir=$(mktemp -d)
   prevdir=$(pwd)
@@ -15,7 +14,6 @@ temp() {
   printf 'Starting a new %s shell. Type exit to return.\n\n' "$SHELL"
   $SHELL
 
-  # Remove the temp directory
   cd "$prevdir" || true
   rm -rf "$tempdir"
 

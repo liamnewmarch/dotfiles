@@ -1,4 +1,3 @@
-# Return early if ncdu is not defined
 if ! command -v ncdu >/dev/null; then
   return
 fi

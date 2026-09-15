@@ -2,7 +2,6 @@ if [ -d /opt/homebrew/bin ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
 
-# Return early if brew is not defined
 if ! command -v brew >/dev/null; then
   return
 fi
