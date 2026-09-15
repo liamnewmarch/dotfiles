@@ -8,7 +8,9 @@ motd() {
 
   if [ -n "$IS_INTERACTIVE" ] && [ -z "$TMUX" ]; then
     _num_tmux="$(_tmux_num_sessions)"
-    [ -z "$_num_tmux" ] || [ "$_num_tmux" -eq 0 ] && return
+    if [ -z "$_num_tmux" ] || [ "$_num_tmux" -eq 0 ]; then
+      return
+    fi
     if [ "$_num_tmux" -eq 1 ]; then
       printf '\n%s\n' "$(color yellow '•') There is $(color blue '1') active tmux session"
     else
