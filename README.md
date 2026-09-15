@@ -50,6 +50,7 @@ I use bash on macOS and Debian. These are the only supported platform/shell comb
 
 Abbreviated aliases are also provided for some commands:
 
+* Container – see `dotfiles edit container`.
 * Docker – see `dotfiles edit docker`.
 * Dotfiles – see `dotfiles edit dotfiles`.
 * Git – see `dotfiles edit git`.
