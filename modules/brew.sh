@@ -15,8 +15,9 @@ if [ -n "$BASH_VERSION" ]; then
 
   # Load completions, adapted from https://docs.brew.sh/Shell-Completion#Bash
   if ! try_source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"; then
-    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
-      try_source "$COMPLETION"
+    for _completion in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      try_source "$_completion"
     done
+    unset _completion
   fi
 fi
