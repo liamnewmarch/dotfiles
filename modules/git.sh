@@ -1,4 +1,3 @@
-# Return early if git is not defined
 if ! command -v git >/dev/null; then
   return
 fi
@@ -68,7 +67,6 @@ alias gmf='git merge --ff'
 # Push
 alias gp='git push'
 alias gp!='git push --force-with-lease'
-alias gpf='git push --force-with-lease'
 alias gpuo='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
 # Rebase
@@ -117,11 +115,7 @@ github() {
 
 # Bash completion for git aliases
 if [ -n "$BASH_VERSION" ]; then
-  if ! command -v __git_complete >/dev/null; then
-    __git_complete() {
-      :
-    }
-  fi
+  command -v __git_complete >/dev/null || return
 
   __git_complete g git
   __git_complete ga git_add
@@ -150,7 +144,7 @@ if [ -n "$BASH_VERSION" ]; then
   __git_complete gma git_merge
   __git_complete gmf git_merge
   __git_complete gp git_push
-  __git_complete gpf git_push
+  __git_complete gp! git_push
   __git_complete gpuo git_push
   __git_complete grb git_rebase
   __git_complete grba git_rebase
