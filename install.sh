@@ -114,11 +114,14 @@ if [ -z "$DOTFILES_ASSUME_YES" ]; then
     echo '[1/2] Running brew bundle install --global'
     brew bundle install --global ||
       echo "  Some packages failed; re-run 'brew bundle install --global'"
-    # Not in the Brewfile: `npm` entries there can't pin a version, and
-    # TypeScript 7.x breaks the Helix LSP setup
-    echo '[2/2] Installing typescript@6'
+    # Some LSP packages must be pinned in order to work with the current version of Helix.
+    # Brewfile doesn’t support pinning npm packages, so install them manually:
+    #
+    # * `typescript` – 7.x is incompatible with `typescript-language-server`.
+    # * `vscode-langservers-extracted` – 4.9.0 dropped support for push-diagnostics.
+    echo '[2/2] Installing pinned npm packages'
     if command -v npm >/dev/null; then
-      npm install --global typescript@6 || echo '  typescript@6 install failed'
+      npm install --global typescript@6.0.3 vscode-langservers-extracted@4.8.0 || echo '  npm install failed'
     else
       echo '  Skipped: npm not found'
     fi

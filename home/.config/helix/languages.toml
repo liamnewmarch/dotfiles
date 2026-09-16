@@ -16,12 +16,13 @@ args = ["--stdio"]
 pylsp.plugins.pycodestyle.maxLineLength = 88
 
 [language-server.vscode-eslint-language-server.config]
-experimental.useFlatConfig = false
+experimental = { useFlatConfig = false }
 nodePath = ""
-problems.shortenToSingleLine = false
+problems = { shortenToSingleLine = false }
 rulesCustomizations = []
 run = "onType"
 validate = "on"
+workingDirectory = { mode = "location" }
 
 [language-server.vscode-html-language-server.config]
 format.contentUnformatted = "code,css,pre,script,svg,textarea"
