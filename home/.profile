@@ -53,10 +53,9 @@ fi
 # them here too.
 DOTFILES_MODULES=''
 
-# Modules are enabled in alphabetical order (except for platform-specific
-# overrides, which come last).
+# Modules are enabled in alphabetical order except for `bin` and `platform`
+# which take precedence over the other modules and should come last.
 for _module in \
-  bin \
   brew \
   color \
   container \
@@ -82,6 +81,7 @@ for _module in \
   top \
   tree \
   update \
+  bin \
   platform \
 ; do
   try_source "$DOTFILES_DIR/modules/$_module.sh"
