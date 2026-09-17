@@ -1,8 +1,4 @@
-if [ -d /opt/homebrew/bin ]; then
-  export PATH="/opt/homebrew/bin:$PATH"
-fi
-
-if ! command -v brew >/dev/null; then
+if ! [ -d /opt/homebrew/bin ]; then
   return
 fi
 
@@ -11,7 +7,7 @@ export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 if [ -n "$BASH_VERSION" ]; then
   # Export env vars like HOMEBREW_PREFIX so `brew --prefix` isn’t necessary
-  eval "$(brew shellenv bash)"
+  eval "$(/opt/homebrew/bin/brew shellenv bash)"
 
   # Load completions, adapted from https://docs.brew.sh/Shell-Completion#Bash
   if ! try_source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"; then
