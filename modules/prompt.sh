@@ -7,28 +7,19 @@ export DOTFILES_PROMPT_DIRECTORY='\W'
 export DOTFILES_PROMPT_TERMINATOR='\$'
 export DOTFILES_PROMPT_TIME='\t'
 
-# Simple monochrome prompt
-PS1="
-$DOTFILES_PROMPT_TIME
-$DOTFILES_PROMPT_DIRECTORY
-$DOTFILES_PROMPT_TERMINATOR "
-
-PS2="$DOTFILES_PROMPT_CONTINUATION "
-
-# Return early if the prompt doesn‘t support colour
-if [ ! "$IS_COLOR" ]; then return; fi
-
-# Colourise simple values. DOTFILES_COLOR_PROMPT tells color() (see
-# modules/color.sh) these are going into PS1, so it should mark them
+# Colourise simple values when supported. DOTFILES_COLOR_PROMPT tells color()
+# (see modules/color.sh) these are going into PS1, so it should mark them
 # non-printing.
-DOTFILES_COLOR_PROMPT=1
-DOTFILES_PROMPT_CONTINUATION=$(color grey "$DOTFILES_PROMPT_CONTINUATION")
-DOTFILES_PROMPT_DIRECTORY=$(color blue "$DOTFILES_PROMPT_DIRECTORY")
-DOTFILES_PROMPT_TERMINATOR=$(color blue "$DOTFILES_PROMPT_TERMINATOR")
-DOTFILES_PROMPT_TIME=$(color grey "$DOTFILES_PROMPT_TIME")
-unset DOTFILES_COLOR_PROMPT
+if [ -n "$IS_COLOR" ]; then
+  DOTFILES_COLOR_PROMPT=1
+  DOTFILES_PROMPT_CONTINUATION=$(color grey "$DOTFILES_PROMPT_CONTINUATION")
+  DOTFILES_PROMPT_DIRECTORY=$(color blue "$DOTFILES_PROMPT_DIRECTORY")
+  DOTFILES_PROMPT_TERMINATOR=$(color blue "$DOTFILES_PROMPT_TERMINATOR")
+  DOTFILES_PROMPT_TIME=$(color grey "$DOTFILES_PROMPT_TIME")
+  unset DOTFILES_COLOR_PROMPT
+fi
 
-# Simple coloured prompt
+# Basic prompt
 PS1="
 $DOTFILES_PROMPT_TIME
 $DOTFILES_PROMPT_DIRECTORY
@@ -36,8 +27,8 @@ $DOTFILES_PROMPT_TERMINATOR "
 
 PS2="$DOTFILES_PROMPT_CONTINUATION "
 
-# Return early if the prompt isn’t interactive
-if [ ! "$IS_INTERACTIVE" ]; then return; fi
+# The dynamic segments below (error, git, ssh, venv) are colour-only
+if [ ! "$IS_INTERACTIVE" ] || [ ! "$IS_COLOR" ]; then return; fi
 
 # Dynamic values are assigned by the PROMPT_COMMAND, see _dotfiles_prompt_command below
 export DOTFILES_PROMPT_ERROR
@@ -46,7 +37,7 @@ export DOTFILES_PROMPT_SSH
 export DOTFILES_PROMPT_VIRTUAL_ENV
 export PROMPT_COMMAND='_dotfiles_prompt_command'
 
-# Dynamic coloured prompt
+# Full prompt
 #
 # This looks a bit weird, but basically:
 #
