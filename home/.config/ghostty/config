@@ -58,3 +58,13 @@ keybind = super+l=text:\x0c
 # by macOS so 'unbind' doesn’t work. Use escape sequences instead.
 keybind = ctrl+tab=esc:[27;5;9~
 keybind = ctrl+shift+tab=esc:[27;6;9~
+keybind = ctrl+0=esc:[27;5;48~
+keybind = ctrl+1=esc:[27;5;49~
+keybind = ctrl+2=esc:[27;5;50~
+keybind = ctrl+3=esc:[27;5;51~
+keybind = ctrl+4=esc:[27;5;52~
+keybind = ctrl+5=esc:[27;5;54~
+keybind = ctrl+6=esc:[27;5;55~
+keybind = ctrl+7=esc:[27;5;56~
+keybind = ctrl+8=esc:[27;5;57~
+keybind = ctrl+9=esc:[27;5;58~
