@@ -28,26 +28,3 @@ set page-completions on
 set show-all-if-ambiguous on
 set skip-completed-text on
 set visible-stats on
-
-# vi mode
-set editing-mode vi
-
-$if mode=vi
-  set show-mode-in-prompt on
-  set vi-cmd-mode-string "(edit) "
-  set vi-ins-mode-string ""
-
-  set keymap vi-command
-  Control-l: clear-screen
-  "\e[A":history-search-backward
-  "\e[B":history-search-forward
-  "\e[C":forward-char
-  "\e[D":backward-char
-
-  set keymap vi-insert
-  Control-l: clear-screen
-  "\e[A":history-search-backward
-  "\e[B":history-search-forward
-  "\e[C":forward-char
-  "\e[D":backward-char
-$endif
