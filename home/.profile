@@ -62,7 +62,6 @@ for _module in \
   docker \
   dotfiles \
   editor \
-  ghostty \
   git \
   grep \
   ip \

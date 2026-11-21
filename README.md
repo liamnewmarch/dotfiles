@@ -8,7 +8,7 @@ I use bash on macOS and Debian. These are the only supported platform/shell comb
 
 ### Config files and themes
 
-* Ghostty (terminal emulator)
+* Terminal.app (macOS)
 * Helix (editor)
 * Tmux
 * Bash
@@ -39,7 +39,6 @@ I use bash on macOS and Debian. These are the only supported platform/shell comb
 
 * `edit` – edit files in the default `$EDITOR`.
 * `browse` – open a URL in the default `$BROWSER` (`open` on macOS, `xdg-open` on Linux, if installed).
-* `ghosttyedit` (alias `ge`) – edit `~/.config/ghostty/` in the default `$EDITOR`.
 * `helixedit` (alias `he`) – edit `~/.config/helix/` in the default `$EDITOR`.
 * `mkcd` – create a directory and immediately `cd` into it. Supports nested directories, too.
 * `serve` – start an HTTP server to serve files in the current directory.

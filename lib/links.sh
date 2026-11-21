@@ -7,7 +7,7 @@
 # word-split deliberately by every caller.
 
 # shellcheck disable=SC2034 # used by every file that sources this one
-DOTFILES_LINK_GROUPS='bash brew git node screen tmux ghostty helix'
+DOTFILES_LINK_GROUPS='bash brew git node screen tmux helix'
 
 # Human-readable description of a group, used in install/uninstall prompts
 dotfiles_link_label() {
@@ -18,7 +18,6 @@ dotfiles_link_label() {
     node)    echo '.npmrc' ;;
     screen)  echo '.screenrc' ;;
     tmux)    echo '.tmux.conf and theme' ;;
-    ghostty) echo '.config/ghostty/ files' ;;
     helix)   echo '.config/helix/ config files' ;;
   esac
 }
@@ -32,7 +31,6 @@ dotfiles_link_paths() {
     node)    echo '.npmrc' ;;
     screen)  echo '.screenrc' ;;
     tmux)    echo '.tmux.conf .tmux/themes/llama.conf' ;;
-    ghostty) echo '.config/ghostty/config .config/ghostty/themes/llama' ;;
     helix)   echo '.config/helix/config.toml .config/helix/languages.toml .config/helix/themes/llama.toml' ;;
   esac
 }

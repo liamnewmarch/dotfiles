@@ -90,6 +90,10 @@ for _group in $DOTFILES_LINK_GROUPS; do
 done
 unset _group _path
 
+# Ghostty config was removed from the repo; drop links an older install made
+unlink_stale .config/ghostty/config
+unlink_stale .config/ghostty/themes/llama
+
 if [ -z "$DOTFILES_ASSUME_YES" ]; then
   # Command-line Tools for Xcode
   if is_macos && [ -z "$(xcode-select -p)" ] && confirm 'Install Xcode command line tools?'; then
@@ -131,16 +135,16 @@ fi
 
 # macOS defaults
 if [ -z "$DOTFILES_ASSUME_YES" ] && is_macos && confirm 'Write custom macOS defaults?'; then
-  if confirm '[1/14] Expand save and print dialogs?'; then
+  if confirm '[1/15] Expand save and print dialogs?'; then
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
     defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
     defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
     defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
   fi
-  if confirm '[2/14] Disable downloaded application quarantine?'; then
+  if confirm '[2/15] Disable downloaded application quarantine?'; then
     defaults write com.apple.LaunchServices LSQuarantine -bool false
   fi
-  if confirm '[3/14] Disable smart text features?'; then
+  if confirm '[3/15] Disable smart text features?'; then
     defaults write NSGlobalDomain KeyRepeat -int 2
     defaults write NSGlobalDomain InitialKeyRepeat -int 15
     defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
@@ -149,12 +153,12 @@ if [ -z "$DOTFILES_ASSUME_YES" ] && is_macos && confirm 'Write custom macOS defa
     defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
     defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
   fi
-  if confirm '[4/14] Enable tap to click?'; then
+  if confirm '[4/15] Enable tap to click?'; then
     defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
     defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
     defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
   fi
-  if confirm '[5/14] Apply Finder defaults?'; then
+  if confirm '[5/15] Apply Finder defaults?'; then
     defaults write com.apple.finder DisableAllAnimations -bool true
     defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
     defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
@@ -166,32 +170,32 @@ if [ -z "$DOTFILES_ASSUME_YES" ] && is_macos && confirm 'Write custom macOS defa
     defaults write com.apple.finder FXPreferredViewStyle -string "Clmv"
     killall Finder
   fi
-  if confirm '[6/14] Apply defaults for new volumes?'; then
+  if confirm '[6/15] Apply defaults for new volumes?'; then
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
     defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
     defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
     defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
   fi
-  if confirm '[7/14] Apply Dock defaults?'; then
+  if confirm '[7/15] Apply Dock defaults?'; then
     defaults write com.apple.dock tilesize -int 32
     defaults write com.apple.dock show-process-indicators -bool true
     defaults write com.apple.dock autohide-delay -float 0
     defaults write com.apple.dock autohide-time-modifier -float 0
     killall Dock
   fi
-  if confirm '[8/14] Enable checking for updates but prevent download?'; then
+  if confirm '[8/15] Enable checking for updates but prevent download?'; then
     defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
     defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
     defaults write com.apple.SoftwareUpdate AutomaticDownload -int 0
     defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 0
     defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 0
   fi
-  if confirm '[9/14] Disable swipe navigation in Google Chrome?'; then
+  if confirm '[9/15] Disable swipe navigation in Google Chrome?'; then
     defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
     defaults write com.google.Chrome AppleEnableMouseSwipeNavigateWithScrolls -bool false
   fi
-  if confirm '[10/14] Disable Spotlight items?'; then
+  if confirm '[10/15] Disable Spotlight items?'; then
     defaults write com.apple.spotlight orderedItems -array \
       '{"enabled" = 1;"name" = "APPLICATIONS";}' \
       '{"enabled" = 1;"name" = "MENU_CONVERSION";}' \
@@ -219,18 +223,31 @@ if [ -z "$DOTFILES_ASSUME_YES" ] && is_macos && confirm 'Write custom macOS defa
     sudo mdutil -i on / > /dev/null
     sudo mdutil -E / > /dev/null
   fi
-  if confirm '[11/14] Disable boot sound?'; then
+  if confirm '[11/15] Disable boot sound?'; then
     sudo nvram SystemAudioVolume=' '
   fi
-  if confirm '[12/14] Enable AAC and AptX bluetooth codecs?'; then
+  if confirm '[12/15] Enable AAC and AptX bluetooth codecs?'; then
     sudo defaults write bluetoothaudiod 'Enable AptX codec' -bool true
     sudo defaults write bluetoothaudiod 'Enable AAC codec' -bool true
   fi
-  if confirm '[13/14] Increase sleep timeout to 15 minutes?'; then
+  if confirm '[13/15] Increase sleep timeout to 15 minutes?'; then
     sudo pmset -a displaysleep 15 sleep 15 powernap 0 lidwake 1
   fi
-  if confirm '[14/14] Enable HiDPI resolutions?'; then
+  if confirm '[14/15] Enable HiDPI resolutions?'; then
     sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+  fi
+  if confirm '[15/15] Install the Llama profile for Terminal.app?'; then
+    # Writes the profile straight into Terminal's settings (replacing any
+    # existing Llama profile) rather than `open`ing it, which would add a
+    # duplicate on every run
+    defaults write com.apple.Terminal 'Window Settings' -dict-add Llama \
+      "$(cat "$DOTFILES_DIR/macos/Llama.terminal")"
+    defaults write com.apple.Terminal 'Default Window Settings' -string Llama
+    defaults write com.apple.Terminal 'Startup Window Settings' -string Llama
+    # Use cmd+left/right to switch tabs
+    defaults write com.apple.Terminal NSUserKeyEquivalents -dict-add \
+      'Show Previous Tab' '@\UF702' 'Show Next Tab' '@\UF703'
+    echo '  Restart Terminal.app to apply'
   fi
   echo 'Done'
 fi

@@ -38,8 +38,6 @@ brew "tmux"
 brew "tree"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
-# Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty"
 # Simple application that will prevent iTunes or Apple Music from launching
 cask "notunes"
 # Move and resize windows using keyboard shortcuts or snap areas
